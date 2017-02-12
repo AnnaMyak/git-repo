@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalDataInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalFindingsInterface;
-import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionAES;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionDCPathos;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionNexus;
 
@@ -26,7 +25,7 @@ public static  String[] constants ={"FallNummer:", "Dr.", "OA.", "OÄ","Name:", 
         //Wählen eine Verschlüssung
         switch(encryption){
         case 1:
-        	encryptionType = new EncryptionAES();
+        	encryptionType = new EncryptionNexus();
             break;
         case 2:
         	encryptionType = new EncryptionNexus();
@@ -64,7 +63,7 @@ public static  String[] constants ={"FallNummer:", "Dr.", "OA.", "OÄ","Name:", 
         //Wählen eine Verschlüssung
         switch(encryption){
         case 1:
-        	encryptionType = new EncryptionAES();
+        	encryptionType = new EncryptionNexus();
             break;
         case 2:
         	encryptionType = new EncryptionNexus();

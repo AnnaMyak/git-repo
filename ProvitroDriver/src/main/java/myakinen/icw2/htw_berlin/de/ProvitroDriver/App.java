@@ -29,19 +29,18 @@ import myakinen.icw2.htw_berlin.de.ProvitroAPI.ExcelOperationsInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.WordOperationsInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.DOC.ExcelOperations;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.DOC.WordOperations;
-import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionAES;
+
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionDCPathos;
+import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionDes;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionNexus;
+import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionRC4;
 
 public class App 
 {
     public static void main( String[] args ) throws Exception
     {
     	/*
-    	//AES
-    	EncryptionMedicalDataInterface pD2 = new EncryptionAES();
-    	System.out.println(pD2.EncryptData("OÄ Rudolph", 1234567));
-    	System.out.println(pD2.DecryptData("GdvMKozX0Zn03VNst7cYkw==", 1234567));
+    	
     	
     	//Original Kirstein
     	EncryptionMedicalDataInterface pD = new EncryptionDCPathos();
@@ -102,12 +101,31 @@ public class App
 		//read.wordManagerEncyptor();
     	
     	//Excel Operations
-    	ExcelOperationsInterface iE = new ExcelOperations();
+    	//ExcelOperationsInterface iE = new ExcelOperations();
     	//iE.writeExcel();
     	//iE.readExcel();
-    	iE.excelManagerEncryptor();
+    	//iE.excelManagerEncryptor();
+    	
+    	//RC4 Test
+    	EncryptionMedicalDataInterface eM = new EncryptionRC4();
+    	System.out.println("RC4 Pseudonym Encrypt " + eM.EncryptData("//+JuHuuu##uu\\", 1111111111));
+    	System.out.println("RC4 Depseudonym  Decrypt" + eM.DecryptData("A3A4245D09BEF3365479D57C0563", 1111111111));
+    	
+    	//RC4 Original Test
+    	EncryptionRC4 rc4 = new EncryptionRC4("1111111111");
+    	System.out.println("RC4 Pseud original "+ rc4.pseudonym("//+JuHuuu##uu\\"));
+    	System.out.println("RC4 Depseud original "+ rc4.depseudonym("A3A4245D09BEF3365479D57C0563"));
 
-			    }
+    	//Des Test
+    	EncryptionMedicalDataInterface eM2 = new EncryptionDes();
+    	System.out.println( "Des Pseudonym  Encrypt "+eM2.EncryptData("//SpongeBob++", 11111111));
+    	System.out.println( "Des Pseudonym  Encrypt "+eM2.DecryptData("FF23176056771FC8A4D2F9219F89D1BB", 11111111));
+    	
+    	// Des Original Test
+    	EncryptionDes des = new EncryptionDes("11111111");
+    	System.out.println("Des pseud original "+ des.pseudonym("//SpongeBob++"));
+    	System.out.println("Des pseud original "+ des.depseudonym("FF23176056771FC8A4D2F9219F89D1BB"));
+    	}
 	}
 
     
