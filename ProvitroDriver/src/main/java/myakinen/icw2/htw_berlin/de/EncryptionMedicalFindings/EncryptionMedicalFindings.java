@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -28,13 +29,15 @@ public class EncryptionMedicalFindings implements EncryptionMedicalFindingsInter
 	
 public EncryptionMedicalDataInterface encryptionType;
 
-public static  String[] constants ={"FallNummer:", "Dr.", "OA.", "OÄ","Name:", "Vorname:" };
+//public static  String[] constants ={"FallNummer:", "Dr.", "OA.", "OÄ","Name:", "Vorname:" };
 
 	
 	public String Encrypt(String text, int key, int encryption) throws Exception {
 		
 		// TODO Auto-generated method stub
-        int iterator =constants.length; 
+        //int iterator =constants.length; 
+		String [] properties = getProperties();
+		//int iterator = properties.size();
         //Wählen eine Verschlüssung
         switch(encryption){
         case 1:
@@ -55,21 +58,26 @@ public static  String[] constants ={"FallNummer:", "Dr.", "OA.", "OÄ","Name:", 
          String[] spl=text.split(" +");
         for (int i=0; i<spl.length; i++)
         {
-        	for (int j=0; j<constants.length; j++)
-        	{
-        		if (new String(constants[j]).equals(spl[i]))
-        				{
-        					spl[i+1]=encryptionType.EncryptData(spl[i+1], key);
-        					spl[i+2]=encryptionType.EncryptData(spl[i+1], key);
-        				}
-        	}
+        	
+        		for (int j=0; j<properties.length; j++)
+        		{
+        			if (properties[j].equals(spl[i]))
+        			{
+        				spl[i+1]=encryptionType.EncryptData(spl[i+1], key);
+        				spl[i+2]=encryptionType.EncryptData(spl[i+2], key);
+        				
+        			}
+        		}
+				
+        		
+        	
         }
         
         for (int i=0; i<spl.length; i++)
         {
         	result= result +spl[i]+" ";
         }	
-        	
+        
         
 		return result;
 	}
@@ -77,10 +85,9 @@ public static  String[] constants ={"FallNummer:", "Dr.", "OA.", "OÄ","Name:", 
 
 	public String Decrypt(String text, int key, int encryption) throws Exception {
 		// TODO Auto-generated method stub
-		ArrayList<String> properties = getProperties();
+		String[] properties = getProperties();
 		//int iterator =constants.length;
-		int iterator = properties.size();
-        //Wählen eine Verschlüssung
+		//Wählen eine Verschlüssung
         switch(encryption){
         case 1:
         	encryptionType = new EncryptionNexus();
@@ -101,11 +108,12 @@ public static  String[] constants ={"FallNummer:", "Dr.", "OA.", "OÄ","Name:", 
         
          for (int i=0; i<spl.length; i++)
          {
-         	for (int j=0; j<iterator; j++)
+         	for (int j=0; j<properties.length; j++)
          	{
-         		if (properties.get(j).equals(spl[i]))
+         		if (properties[j].equals(spl[i]))
          				{
          					spl[i+1]=encryptionType.DecryptData(spl[i+1], key);
+         					spl[i+2]=encryptionType.DecryptData(spl[i+1], key);
          				}
          	}
          }
@@ -117,7 +125,7 @@ public static  String[] constants ={"FallNummer:", "Dr.", "OA.", "OÄ","Name:", 
  		return result;
 	}
 	
-	public ArrayList<String> getProperties () 
+	public String[] getProperties () 
 	{
 		String fileName = "properties.txt";
 		ArrayList<String> properties = new ArrayList<>();
@@ -128,8 +136,9 @@ public static  String[] constants ={"FallNummer:", "Dr.", "OA.", "OÄ","Name:", 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		properties.forEach(System.out::println);
-		return properties;
+		String[] stockArr = new String[properties.size()];
+		stockArr = properties.toArray(stockArr);
+		return stockArr;
 	}
 
 }
