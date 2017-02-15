@@ -176,16 +176,13 @@ public class ExcelOperations implements ExcelOperationsInterface  {
         	   Row r = sheet.createRow(i);
         	   for (int j=0; j<list.get(1).size(); j++)
         	   {
-        		   if (j==1||j==2||j==3)
+        		   if (j==1)
         		   {
-        			   r.createCell(j).setCellValue( encryptionType.EncryptData(list.get(i).get(j), key) );    
+        			  
+						r.createCell(j).setCellValue( encryptionType.EncryptData(list.get(i).get(j), key));
+					
         		   }
-        		   if (j==5)
-        		   {
-        			   encrMedFind.Encrypt(list.get(i).get(j), key, encryption);
-        		   }
-        		   else
-        			   r.createCell(j).setCellValue( list.get(i).get(j) );   
+        		   r.createCell(j).setCellValue( list.get(i).get(j) );   
         	   }
         	}
         try {
@@ -198,7 +195,7 @@ public class ExcelOperations implements ExcelOperationsInterface  {
             e.printStackTrace();
         }
 
-        System.out.println("Done");
+        
         }
 
 	@Override
