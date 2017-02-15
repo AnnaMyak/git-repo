@@ -8,5 +8,5 @@ public interface ExcelOperationsInterface {
 	
 	public void readExcel(String path)throws  IOException;
 	public void writeExcel();
-	public void excelManagerEncryptor(String path) throws IOException;
+	public void excelManagerEncryptor(String path, int encryption, int key) throws IOException, Exception;
 }

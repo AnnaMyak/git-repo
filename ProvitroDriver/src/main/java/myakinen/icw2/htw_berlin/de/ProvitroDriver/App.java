@@ -153,8 +153,8 @@ public class App
     	*/
     	ExcelOperationsInterface eo= new ExcelOperations();
     	eo.readExcel("C:/Users/AnnaToshiba2/Desktop/ICW2/provitro.xlsx");
-    	eo.excelManagerEncryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/provitro.xlsx");
-    	//eo.writeExcel();
+    	eo.excelManagerEncryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/provitro.xlsx",1111111111, 3);
+    	
 
     	
     	}

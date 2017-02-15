@@ -19,15 +19,19 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import myakinen.icw2.htw_berlin.de.EncryptionMedicalFindings.EncryptionMedicalFindings;
+import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalDataInterface;
+import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalFindingsInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.ExcelOperationsInterface;
-import myakinen.icw2.htw_berlin.de.ProvitroAPI.MedicalFindingSchema;
+import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionDes;
+import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionNexus;
+import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionRC4;
+
 
 
 public class ExcelOperations implements ExcelOperationsInterface  {
 
-	public static final String HEADER1= "MedCase";
-	public static final String HEADER2="Verschlüsselte Patientdaten";
-	public static final String HEADER3="Originale Patientdaten";
+	private EncryptionMedicalDataInterface encryptionType;
 	
 	public void readExcel() {
 		// TODO Auto-generated method stub
@@ -118,12 +122,29 @@ public class ExcelOperations implements ExcelOperationsInterface  {
 
 	}
 
-	public void excelManagerEncryptor(String path) throws IOException
+	public void excelManagerEncryptor(String path, int encryption, int key) throws Exception
 	{
 		List<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
-		//MedicalFindingSchema finding= new MedicalFindingSchema();
+		
 		ArrayList <String> finding = new ArrayList<String>();
 		XSSFWorkbook wb;
+		EncryptionMedicalFindingsInterface encrMedFind = new EncryptionMedicalFindings ();
+		
+		switch(encryption){
+        case 1:
+        	encryptionType = new EncryptionNexus();
+            break;
+        case 2:
+        	encryptionType = new EncryptionDes();
+            break;
+            
+        case 3:
+        	encryptionType = new EncryptionRC4();
+        	break;
+        
+        default:
+            System.out.println("Verschlüssung ist nicht gewählt");
+        }
 		
 		try {
 			wb = new XSSFWorkbook(new File(path));
@@ -139,8 +160,7 @@ public class ExcelOperations implements ExcelOperationsInterface  {
 			    list.add(finding);
         		finding= new ArrayList<String>();
 
-			    //for (int i = 0; i < row.getPhysicalNumberOfCells(); i++) {  
-			    //}
+			    
 			    
 			}
 			
@@ -156,7 +176,16 @@ public class ExcelOperations implements ExcelOperationsInterface  {
         	   Row r = sheet.createRow(i);
         	   for (int j=0; j<list.get(1).size(); j++)
         	   {
-        		   r.createCell(j).setCellValue( list.get(i).get(j) );   
+        		   if (j==1||j==2||j==3)
+        		   {
+        			   r.createCell(j).setCellValue( encryptionType.EncryptData(list.get(i).get(j), key) );    
+        		   }
+        		   if (j==5)
+        		   {
+        			   encrMedFind.Encrypt(list.get(i).get(j), key, encryption);
+        		   }
+        		   else
+        			   r.createCell(j).setCellValue( list.get(i).get(j) );   
         	   }
         	}
         try {
