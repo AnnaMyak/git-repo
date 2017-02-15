@@ -152,7 +152,7 @@ public class App
     	System.out.println ("Test Befund 10 " +md.Encrypt(text10, 1111111111, 1));
     	*/
     	ExcelOperationsInterface eo= new ExcelOperations();
-    	//eo.readExcel("C:/Users/AnnaToshiba2/Desktop/ICW2/provitro.xlsx");
+    	eo.readExcel("C:/Users/AnnaToshiba2/Desktop/ICW2/provitro.xlsx");
     	eo.excelManagerEncryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/provitro.xlsx");
     	//eo.writeExcel();
 

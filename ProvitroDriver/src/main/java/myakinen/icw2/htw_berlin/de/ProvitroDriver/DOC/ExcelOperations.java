@@ -131,13 +131,17 @@ public class ExcelOperations implements ExcelOperationsInterface  {
 			DataFormatter formatter = new DataFormatter();
 			for (Iterator iterator = sheet.rowIterator(); iterator.hasNext();) {
 			    XSSFRow row = (XSSFRow) iterator.next();
-			    for (int i = 0; i < row.getPhysicalNumberOfCells(); i++) {  
-			    	finding.add(formatter.formatCellValue(row.getCell(i)));    
+			    System.out.println("CELLS "+ row.getPhysicalNumberOfCells());
+			    for (int i = 0; i < row.getPhysicalNumberOfCells(); i++) 
+			    {
+			    	finding.add(formatter.formatCellValue(row.getCell(i)));				    	
 			    }
+			    list.add(finding);
+        		finding= new ArrayList<String>();
+
+			    //for (int i = 0; i < row.getPhysicalNumberOfCells(); i++) {  
+			    //}
 			    
-	        		if (finding!=null)
-	        			list.add( finding);
-	        		finding= null;
 			}
 			
 		} catch (InvalidFormatException e) {
@@ -188,11 +192,11 @@ public class ExcelOperations implements ExcelOperationsInterface  {
 			    	finding.add(formatter.formatCellValue(row.getCell(i)));				    	
 			    }
 			    list.add(finding);
-        		//finding=null;
+        		finding= new ArrayList<String>();
 
 			    //for (int i = 0; i < row.getPhysicalNumberOfCells(); i++) {  
 			    //}
-			    System.out.println("Test"); 
+			    
 			}
 			
 	
