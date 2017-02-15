@@ -108,27 +108,27 @@ public class App
     	//iE.excelManagerEncryptor();
     	
     	//RC4 Test
-    	EncryptionMedicalDataInterface eM = new EncryptionRC4();
-    	System.out.println("RC4 Pseudonym Encrypt " + eM.EncryptData("//+JuHuuu##uu\\", 1111111111));
-    	System.out.println("RC4 Depseudonym  Decrypt" + eM.DecryptData("A3A4245D09BEF3365479D57C0563", 1111111111));
+    	//EncryptionMedicalDataInterface eM = new EncryptionRC4();
+    	//System.out.println("RC4 Pseudonym Encrypt " + eM.EncryptData("//+JuHuuu##uu\\", 1111111111));
+    	//System.out.println("RC4 Depseudonym  Decrypt" + eM.DecryptData("A3A4245D09BEF3365479D57C0563", 1111111111));
     	
     	//RC4 Original Test
-    	EncryptionRC4 rc4 = new EncryptionRC4("1111111111");
-    	System.out.println("RC4 Pseud original "+ rc4.pseudonym("//+JuHuuu##uu\\"));
-    	System.out.println("RC4 Depseud original "+ rc4.depseudonym("A3A4245D09BEF3365479D57C0563"));
+    	//EncryptionRC4 rc4 = new EncryptionRC4("1111111111");
+    	//System.out.println("RC4 Pseud original "+ rc4.pseudonym("//+JuHuuu##uu\\"));
+    	//System.out.println("RC4 Depseud original "+ rc4.depseudonym("A3A4245D09BEF3365479D57C0563"));
 
     	//Des Test
-    	EncryptionMedicalDataInterface eM2 = new EncryptionDes();
-    	System.out.println( "Des Pseudonym  Encrypt "+eM2.EncryptData("//SpongeBob++", 11111111));
-    	System.out.println( "Des Pseudonym  Encrypt "+eM2.DecryptData("FF23176056771FC8A4D2F9219F89D1BB", 11111111));
+    	//EncryptionMedicalDataInterface eM2 = new EncryptionDes();
+    	//System.out.println( "Des Pseudonym  Encrypt "+eM2.EncryptData("//SpongeBob++", 11111111));
+    	//System.out.println( "Des Pseudonym  Encrypt "+eM2.DecryptData("FF23176056771FC8A4D2F9219F89D1BB", 11111111));
     	
     	// Des Original Test
-    	EncryptionDes des = new EncryptionDes("11111111");
-    	System.out.println("Des pseud original "+ des.pseudonym("//SpongeBob++"));
-    	System.out.println("Des pseud original "+ des.depseudonym("FF23176056771FC8A4D2F9219F89D1BB"));
+    	//EncryptionDes des = new EncryptionDes("11111111");
+    	//System.out.println("Des pseud original "+ des.pseudonym("//SpongeBob++"));
+    	//System.out.println("Des pseud original "+ des.depseudonym("FF23176056771FC8A4D2F9219F89D1BB"));
     	
     	//test Med Data
-    	EncryptionMedicalFindings md = new EncryptionMedicalFindings();
+    	/*EncryptionMedicalFindings md = new EncryptionMedicalFindings();
     	String text1="  PATHOHISTOLOGISCHE BEGUTACHTUNG  (Verwendung zu wissenschaftlichen Dr. Bobo oder gutachterlichen Zwecken nur mit ausdrücklicher Zustimmung des Institutsdirektors)      Makroskopie   Zyste Hypopharynx Seitenwand links).     Im vorliegenden Material kein Anhalt für Malignität oder Spezifität.                Prof. Dr. Homer Simpson        Prof. Dr. Capitan America ";
     	String text2 ="  PATHOHISTOLOGISCHE BEGUTACHTUNG  (Verwendung zu wissenschaftlichen oder gutachterlichen Zwecken nur mit ausdrücklicher Zustimmung des Institutsdirektors)      Makroskopie   vasiven Wachstums, zum, Sie erhalten einen Zusatzbericht.    liegt nicht vor.                  Prof. Dr. Patrik. Star        Prof. Dr. Bart Simpson      ";
     	String text3 ="  PATHOHISTOLOGISCHE BEGUTACHTUNG  1. Zusatzbericht  (Verwendung zu wissenschaftlichen oder gutachterlichen Zwecken nur mit ausdrücklicher Zustimmung des Institutsdirektors)      Mikroskopie   Es zeigen sich keine neuen Aspekte.   Kein invasiver Tumor.        Neoplasie, fokal high grade. (gibt es klinische Restbefunde?).                    Prof. Dr. Peter. Griffin        Prof. Dr. King Lion      ";
@@ -150,7 +150,11 @@ public class App
     	System.out.println ("Test Befund 8 " +md.Encrypt(text8, 1111111111, 3));
     	System.out.println ("Test Befund 9 " +md.Encrypt(text9, 1111111111, 1));
     	System.out.println ("Test Befund 10 " +md.Encrypt(text10, 1111111111, 1));
-    	
+    	*/
+    	ExcelOperationsInterface eo= new ExcelOperations();
+    	//eo.readExcel("C:/Users/AnnaToshiba2/Desktop/ICW2/provitro.xlsx");
+    	eo.excelManagerEncryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/provitro.xlsx");
+    	//eo.writeExcel();
 
     	
     	}

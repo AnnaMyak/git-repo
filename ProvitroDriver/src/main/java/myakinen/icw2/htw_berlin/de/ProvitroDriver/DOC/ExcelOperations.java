@@ -10,15 +10,18 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.ExcelOperationsInterface;
-import myakinen.icw2.htw_berlin.de.ProvitroAPI.PatientData;
+import myakinen.icw2.htw_berlin.de.ProvitroAPI.MedicalFindingSchema;
+
 
 public class ExcelOperations implements ExcelOperationsInterface  {
 
@@ -30,7 +33,7 @@ public class ExcelOperations implements ExcelOperationsInterface  {
 		// TODO Auto-generated method stub
 		try
         {
-            String excelPath = "C:/Users/AnnaToshiba2/Desktop/ICW2/APACHE/FirstTest.xlsx";
+            String excelPath = "C:/Users/AnnaToshiba2/Desktop/ICW2/provitro.xlsx";
             FileInputStream fileInputStream = new FileInputStream(new File(excelPath));
 
             // Create Workbook instance holding .xls file
@@ -102,7 +105,7 @@ public class ExcelOperations implements ExcelOperationsInterface  {
         }
 
         try {
-            FileOutputStream outputStream = new FileOutputStream("C:/Users/AnnaToshiba2/Desktop/ICW2/APACHE/FirstTest"+".xlsx");
+            FileOutputStream outputStream = new FileOutputStream("C:/Users/AnnaToshiba2/Desktop/ICW2/outputXLS/EncryptedData"+".xlsx");
             workbook.write(outputStream);
             workbook.close();
         } catch (FileNotFoundException e) {
@@ -115,101 +118,93 @@ public class ExcelOperations implements ExcelOperationsInterface  {
 
 	}
 
-	public void excelManagerEncryptor()
+	public void excelManagerEncryptor(String path) throws IOException
 	{
-		try {
-		// TODO Auto-generated method stub
-		//XSSFWorkbook resultWorkbook = new XSSFWorkbook();
-		List<PatientData> data = new ArrayList<PatientData>();
-       // XSSFSheet sheet = resultWorkbook.createSheet("Verschlüsselte Daten");
-        String excelPath = "C:/Users/AnnaToshiba2/Desktop/ICW2/APACHE/FirstTest.xlsx";
-        FileInputStream fileInputStream = new FileInputStream(new File(excelPath));
-
-        // Create Workbook instance holding .xls file
-        XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
-
-        // Get the first worksheet
-        XSSFSheet sheetRead = workbook.getSheetAt(0);
-
-        // Iterate through each rows
-        Iterator<Row> rowIterator = sheetRead.iterator();
-
-        while (rowIterator.hasNext())
-        {
-            // Get Each Row
-            Row row = rowIterator.next();
-
-            // Iterating through Each column of Each Row
-            Iterator<Cell> cellIterator = row.cellIterator();
-            String medc="";
-            String pid ="";
-            System.out.println("Row: " + row.getRowNum());
-            while (cellIterator.hasNext())
-            {
-                Cell cell = cellIterator.next();
-                 if (cell.getColumnIndex()==0)
-                 {
-                	 medc=cell.getStringCellValue();
-                 }
-                 if (cell.getColumnIndex()==1)
-                 {
-                	 pid= cell.getStringCellValue();
-                 }
-                 PatientData patient = new PatientData();
-                 patient.setMedCase(medc);
-                 patient.setRootPatientData(pid);
-                 data.add(patient);
-                 
-            }
-            for (PatientData p : data)
-            {
-            	System.out.println(p.getMedCase());
-            }
-            
-            System.out.println("Size "+ data.size());
-            
-                // Checking the cell format
-                /*switch (cell.getCellType())
-                {
-                case Cell.CELL_TYPE_NUMERIC:
-                    System.out.print(cell.getNumericCellValue() + "\t");
-                    break;
-                case Cell.CELL_TYPE_STRING:
-                    System.out.print(cell.getStringCellValue() + "\t");
-                    break;
-                
-                }*/
-            
-           /* int rowNum = 0;
-            for(PatientData pat : data)
-            {
-            	Row rowWrite = sheet.createRow(rowNum++);
-            	Cell cellMedCase = row.createCell(0);
-            	Cell cellPid = row.createCell(1);
-            	cellMedCase.setCellValue(pat.getMedCase());
-            	cellPid.setCellValue(pat.getRootPatientData());
-                
-            }
-            try {
-                FileOutputStream outputStream = new FileOutputStream("C:/Users/AnnaToshiba2/Desktop/ICW2/APACHE/CopyTest"+".xlsx");
-                resultWorkbook.write(outputStream);
-                resultWorkbook.close();
-                System.out.println("Success!!");
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-	*/
-	}
-		}
+		List<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
+		//MedicalFindingSchema finding= new MedicalFindingSchema();
+		ArrayList <String> finding = new ArrayList<String>();
+		XSSFWorkbook wb;
 		
-		catch(Exception e)
-		{
+		try {
+			wb = new XSSFWorkbook(new File(path));
+			XSSFSheet sheet = wb.getSheetAt(0);
+			DataFormatter formatter = new DataFormatter();
+			for (Iterator iterator = sheet.rowIterator(); iterator.hasNext();) {
+			    XSSFRow row = (XSSFRow) iterator.next();
+			    for (int i = 0; i < row.getPhysicalNumberOfCells(); i++) {  
+			    	finding.add(formatter.formatCellValue(row.getCell(i)));    
+			    }
+			    
+	        		if (finding!=null)
+	        			list.add( finding);
+	        		finding= null;
+			}
+			
+		} catch (InvalidFormatException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
-	
+		
+		XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("Encrypted Medical Data ");
+        for (int i=0; i<list.size(); i++) 
+        	{
+        	   Row r = sheet.createRow(i);
+        	   for (int j=0; j<list.get(1).size(); j++)
+        	   {
+        		   r.createCell(j).setCellValue( list.get(i).get(j) );   
+        	   }
+        	}
+        try {
+            FileOutputStream outputStream = new FileOutputStream("C:/Users/AnnaToshiba2/Desktop/ICW2/outputXLS/EncryptedData"+".xlsx");
+            workbook.write(outputStream);
+            workbook.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-	}}
+        System.out.println("Done");
+        }
+
+	@Override
+	public void readExcel(String path) throws  IOException  {
+		// TODO Auto-generated method stub
+		List<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
+		ArrayList<String> finding= new ArrayList<String>();
+		
+		XSSFWorkbook wb;
+		
+		try {
+			wb = new XSSFWorkbook(new File(path));
+			XSSFSheet sheet = wb.getSheetAt(0);
+			DataFormatter formatter = new DataFormatter();
+			for (Iterator iterator = sheet.rowIterator(); iterator.hasNext();) {
+			    XSSFRow row = (XSSFRow) iterator.next();
+			    System.out.println("CELLS "+ row.getPhysicalNumberOfCells());
+			    for (int i = 0; i < row.getPhysicalNumberOfCells(); i++) 
+			    {
+			    	finding.add(formatter.formatCellValue(row.getCell(i)));				    	
+			    }
+			    list.add(finding);
+        		//finding=null;
+
+			    //for (int i = 0; i < row.getPhysicalNumberOfCells(); i++) {  
+			    //}
+			    System.out.println("Test"); 
+			}
+			
+	
+			System.out.println("SIZE "+ list.size() );
+			System.out.println("SI "+ finding.size() );
+			
+		} catch (InvalidFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	}
