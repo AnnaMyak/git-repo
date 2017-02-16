@@ -24,6 +24,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import myakinen.icw2.htw_berlin.de.EncryptionMedicalFindings.EncryptionMedicalFindings;
+import myakinen.icw2.htw_berlin.de.EncryptionMedicalFindings.EncyptionMedicalFindingsSecond;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalDataInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalFindingsInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.ExcelOperationsInterface;
@@ -36,6 +37,7 @@ import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.Encrypti
 public class ExcelOperations implements ExcelOperationsInterface  {
 
 	private EncryptionMedicalDataInterface encryptionType;
+	EncryptionMedicalFindingsInterface encrMedFind;
 	
 	
 	public void writeExcel() {
@@ -50,7 +52,8 @@ public class ExcelOperations implements ExcelOperationsInterface  {
 		
 		ArrayList <String> finding = new ArrayList<String>();
 		XSSFWorkbook wb;
-		//EncryptionMedicalFindingsInterface encrMedFind = new EncryptionMedicalFindings ();
+		//encrMedFind = new EncryptionMedicalFindings ();
+		encrMedFind = new EncyptionMedicalFindingsSecond ();
 		
 		switch(encryption){
         case 1:
@@ -106,6 +109,7 @@ public class ExcelOperations implements ExcelOperationsInterface  {
         		if (list.size() >0)
         		{
         			finding.set(1, encryptionType.EncryptData(finding.get(1), key));
+        			finding.set(5, encrMedFind.Encrypt(finding.get(5), key, encryption));
         		}
 			    
         		

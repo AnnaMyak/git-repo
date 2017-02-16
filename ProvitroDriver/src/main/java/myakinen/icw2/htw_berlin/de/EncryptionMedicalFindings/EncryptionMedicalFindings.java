@@ -28,17 +28,11 @@ public class EncryptionMedicalFindings implements EncryptionMedicalFindingsInter
 	
 	
 public EncryptionMedicalDataInterface encryptionType;
-
-//public static  String[] constants ={"FallNummer:", "Dr.", "OA.", "OÄ","Name:", "Vorname:" };
-
 	
 	public String Encrypt(String text, int key, int encryption) throws Exception {
-		
-		// TODO Auto-generated method stub
-        //int iterator =constants.length; 
+
 		String [] properties = getProperties();
-		//int iterator = properties.size();
-        //Wählen eine Verschlüssung
+	
         switch(encryption){
         case 1:
         	encryptionType = new EncryptionNexus();
@@ -127,7 +121,7 @@ public EncryptionMedicalDataInterface encryptionType;
 	
 	public String[] getProperties () 
 	{
-		String fileName = "properties.txt";
+		String fileName = "properties";
 		ArrayList<String> properties = new ArrayList<>();
 
 		try (BufferedReader br = Files.newBufferedReader(Paths.get(fileName))) {
