@@ -50,7 +50,7 @@ public class ExcelOperations implements ExcelOperationsInterface  {
 		
 		ArrayList <String> finding = new ArrayList<String>();
 		XSSFWorkbook wb;
-		EncryptionMedicalFindingsInterface encrMedFind = new EncryptionMedicalFindings ();
+		//EncryptionMedicalFindingsInterface encrMedFind = new EncryptionMedicalFindings ();
 		
 		switch(encryption){
         case 1:
@@ -66,6 +66,7 @@ public class ExcelOperations implements ExcelOperationsInterface  {
         
         default:
             System.out.println("Verschlüssung ist nicht gewählt");
+            break;
         }
 		
 		try {
@@ -98,7 +99,18 @@ public class ExcelOperations implements ExcelOperationsInterface  {
 			    {
 			    	finding.add(formatter.formatCellValue(row.getCell(i)));				    	
 			    }
-			    list.add(finding);
+			    
+        		
+        		//Encrypt Data
+        		
+        		if (list.size() >0)
+        		{
+        			finding.set(1, encryptionType.EncryptData(finding.get(1), key));
+        		}
+			    
+        		
+        		
+        		list.add(finding);
         		finding= new ArrayList<String>();
         		
 
