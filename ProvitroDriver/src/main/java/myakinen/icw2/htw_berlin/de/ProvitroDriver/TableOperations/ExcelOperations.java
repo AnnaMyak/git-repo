@@ -23,8 +23,10 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import myakinen.icw2.htw_berlin.de.Config.Configuration;
 import myakinen.icw2.htw_berlin.de.EncryptionMedicalFindings.EncryptionMedicalFindings;
 import myakinen.icw2.htw_berlin.de.EncryptionMedicalFindings.EncyptionMedicalFindingsSecond;
+import myakinen.icw2.htw_berlin.de.ProvitroAPI.ConfigurationInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalDataInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalFindingsInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.TablesOperationsInterface;
@@ -37,13 +39,16 @@ import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.Encrypti
 public class ExcelOperations implements TablesOperationsInterface  {
 
 	private EncryptionMedicalDataInterface encryptionType;
-	EncryptionMedicalFindingsInterface encrMedFind;
+	private EncryptionMedicalFindingsInterface encrMedFind;
+	private ConfigurationInterface config;
+	
 	
 
-	public void excelManagerEncryptor(String path, int encryption, int key) throws Exception
+	public void managerEncryptor(String path, int encryption, int key) throws Exception
 	{
 		boolean testDataStructure=true;
-		ArrayList<String> config = getConfiguration ();
+		config = new Configuration();
+		ArrayList<String> configurations = config.getConfigurations("Config2");
 		List<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
 		
 		ArrayList <String> finding = new ArrayList<String>();
@@ -79,7 +84,7 @@ public class ExcelOperations implements TablesOperationsInterface  {
 				//Test Data structure
 				if (list.size()==1)
 				{
-					if (list.get(0).equals(config))
+					if (list.get(0).equals(configurations))
 					{
 						System.out.println("Datei richtig ist richtig konfiguriert");
 					}
@@ -151,25 +156,14 @@ public class ExcelOperations implements TablesOperationsInterface  {
 	
 		
 	
-	public ArrayList<String> getConfiguration () 
-	{
-		String fileName = "Config2";
-		ArrayList<String> config = new ArrayList<>();
-
-		try (BufferedReader br = Files.newBufferedReader(Paths.get(fileName))) {
-			config = (ArrayList<String>) br.lines().collect(Collectors.toList());
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return config;
-	}
+	
 
 	@Override
-	public void excelManagerDecryptor(String path, int encryption, int key) throws IOException, Exception {
+	public void managerDecryptor(String path, int encryption, int key) throws IOException, Exception {
 		// TODO Auto-generated method stub
 		boolean testDataStructure=true;
-		ArrayList<String> config = getConfiguration ();
+		config = new Configuration();
+		ArrayList<String> configurations = config.getConfigurations("Config2");;
 		List<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
 		
 		ArrayList <String> finding = new ArrayList<String>();
@@ -205,7 +199,7 @@ public class ExcelOperations implements TablesOperationsInterface  {
 				//Test Data structure
 				if (list.size()==1)
 				{
-					if (list.get(0).equals(config))
+					if (list.get(0).equals(configurations))
 					{
 						System.out.println("Datei richtig ist richtig konfiguriert");
 					}
