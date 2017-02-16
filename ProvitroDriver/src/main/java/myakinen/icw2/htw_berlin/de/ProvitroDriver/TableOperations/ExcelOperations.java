@@ -1,4 +1,4 @@
-package myakinen.icw2.htw_berlin.de.ProvitroDriver.DOC;
+package myakinen.icw2.htw_berlin.de.ProvitroDriver.TableOperations;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,22 +27,18 @@ import myakinen.icw2.htw_berlin.de.EncryptionMedicalFindings.EncryptionMedicalFi
 import myakinen.icw2.htw_berlin.de.EncryptionMedicalFindings.EncyptionMedicalFindingsSecond;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalDataInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalFindingsInterface;
-import myakinen.icw2.htw_berlin.de.ProvitroAPI.ExcelOperationsInterface;
+import myakinen.icw2.htw_berlin.de.ProvitroAPI.TablesOperationsInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionDes;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionNexus;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionRC4;
 
 
 
-public class ExcelOperations implements ExcelOperationsInterface  {
+public class ExcelOperations implements TablesOperationsInterface  {
 
 	private EncryptionMedicalDataInterface encryptionType;
 	EncryptionMedicalFindingsInterface encrMedFind;
 	
-	
-	public void writeExcel() {
-		// TODO Auto-generated method stub
-	}
 
 	public void excelManagerEncryptor(String path, int encryption, int key) throws Exception
 	{
@@ -52,8 +48,8 @@ public class ExcelOperations implements ExcelOperationsInterface  {
 		
 		ArrayList <String> finding = new ArrayList<String>();
 		XSSFWorkbook wb;
-		//encrMedFind = new EncryptionMedicalFindings ();
-		encrMedFind = new EncyptionMedicalFindingsSecond ();
+		encrMedFind = new EncryptionMedicalFindings ();
+		//encrMedFind = new EncyptionMedicalFindingsSecond ();
 		
 		switch(encryption){
         case 1:
@@ -151,43 +147,9 @@ public class ExcelOperations implements ExcelOperationsInterface  {
 		}
         
 
-	@Override
-	public void readExcel(String path) throws  IOException  {
-		// TODO Auto-generated method stub
-		List<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
-		ArrayList<String> finding= new ArrayList<String>();
-		
-		XSSFWorkbook wb;
-		
-		try {
-			wb = new XSSFWorkbook(new File(path));
-			XSSFSheet sheet = wb.getSheetAt(0);
-			DataFormatter formatter = new DataFormatter();
-			for (Iterator iterator = sheet.rowIterator(); iterator.hasNext();) {
-			    XSSFRow row = (XSSFRow) iterator.next();
-			    System.out.println("CELLS "+ row.getPhysicalNumberOfCells());
-			    for (int i = 0; i < row.getPhysicalNumberOfCells(); i++) 
-			    {
-			    	finding.add(formatter.formatCellValue(row.getCell(i)));				    	
-			    }
-			    list.add(finding);
-        		finding= new ArrayList<String>();
-
-			    //for (int i = 0; i < row.getPhysicalNumberOfCells(); i++) {  
-			    //}
-			    
-			}
-			
 	
-			System.out.println("SIZE "+ list.size() );
-			System.out.println("SI "+ finding.size() );
-			
-		} catch (InvalidFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
 		
-	}
 	
 	public ArrayList<String> getConfiguration () 
 	{
@@ -201,6 +163,114 @@ public class ExcelOperations implements ExcelOperationsInterface  {
 			e.printStackTrace();
 		}
 		return config;
+	}
+
+	@Override
+	public void excelManagerDecryptor(String path, int encryption, int key) throws IOException, Exception {
+		// TODO Auto-generated method stub
+		boolean testDataStructure=true;
+		ArrayList<String> config = getConfiguration ();
+		List<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
+		
+		ArrayList <String> finding = new ArrayList<String>();
+		XSSFWorkbook wb;
+		encrMedFind = new EncryptionMedicalFindings ();
+		//encrMedFind = new EncyptionMedicalFindingsSecond ();
+		
+		switch(encryption){
+        case 1:
+        	encryptionType = new EncryptionNexus();
+            break;
+        case 2:
+        	encryptionType = new EncryptionDes();
+            break;
+            
+        case 3:
+        	encryptionType = new EncryptionRC4();
+        	break;
+        
+        default:
+            System.out.println("Verschlüssung ist nicht gewählt");
+            break;
+        }
+		
+		try {
+			wb = new XSSFWorkbook(new File(path));
+			XSSFSheet sheet = wb.getSheetAt(0);
+			DataFormatter formatter = new DataFormatter();
+			
+			if (testDataStructure){
+			for (Iterator iterator = sheet.rowIterator(); iterator.hasNext();) {
+				
+				//Test Data structure
+				if (list.size()==1)
+				{
+					if (list.get(0).equals(config))
+					{
+						System.out.println("Datei richtig ist richtig konfiguriert");
+					}
+					else
+					{
+						testDataStructure=false;
+						System.out.println("Datei richtig wurde falsch konfiguriert");
+						System.out.println("Weitere Bearbeitung ist nicht möglich");
+						System.out.println("Kongigurieren Sie bitte die Datei neu");
+					}
+				}
+
+				XSSFRow row = (XSSFRow) iterator.next();
+			    //System.out.println("CELLS "+ row.getPhysicalNumberOfCells());
+			    for (int i = 0; i < row.getPhysicalNumberOfCells(); i++) 
+			    {
+			    	finding.add(formatter.formatCellValue(row.getCell(i)));				    	
+			    }
+			    
+        		
+        		//Encrypt Data
+        		
+        		if (list.size() >0)
+        		{
+        			finding.set(1, encryptionType.DecryptData(finding.get(1), key));
+        			finding.set(5, encrMedFind.Decrypt(finding.get(5), key, encryption));
+        		}
+			    
+        		
+        		
+        		list.add(finding);
+        		finding= new ArrayList<String>();
+        		
+
+			}
+			    
+			}
+			
+		} catch (InvalidFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (testDataStructure){
+		XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("Decrypted Medical Data ");
+        for (int i=0; i<list.size(); i++) 
+        	{
+        	   Row r = sheet.createRow(i);
+        	   for (int j=0; j<list.get(1).size(); j++)
+        	   {
+        		   
+        		   r.createCell(j).setCellValue( list.get(i).get(j) );   
+        	   }
+        	}
+        try {
+            FileOutputStream outputStream = new FileOutputStream("C:/Users/AnnaToshiba2/Desktop/ICW2/outputXLS/DecryptedData"+".xlsx");
+            workbook.write(outputStream);
+            workbook.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		}
+		
 	}
 	
 	

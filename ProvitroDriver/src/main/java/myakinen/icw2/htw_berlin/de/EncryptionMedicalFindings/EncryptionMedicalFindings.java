@@ -107,7 +107,7 @@ public EncryptionMedicalDataInterface encryptionType;
          		if (properties[j].equals(spl[i]))
          				{
          					spl[i+1]=encryptionType.DecryptData(spl[i+1], key);
-         					spl[i+2]=encryptionType.DecryptData(spl[i+1], key);
+         					spl[i+2]=encryptionType.DecryptData(spl[i+2], key);
          				}
          	}
          }
