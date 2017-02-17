@@ -1,7 +1,8 @@
-package myakinen.icw2.htw_berlin.de.Provitro.GUI;
+package myakinen.icw2.htw_berlin.de.GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -10,33 +11,39 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import myakinen.icw2.htw_berlin.de.ProvitroAPI.ConfigurationInterface;
+import myakinen.icw2.htw_berlin.de.ProvitroAPI.TablesOperationsInterface;
+import myakinen.icw2.htw_berlin.de.ProvitroDriver.TableOperations.CSVOperations;
+import myakinen.icw2.htw_berlin.de.ProvitroDriver.TableOperations.ExcelOperations;
 
-public class GUI extends JFrame implements ActionListener {
-
+public class GUI extends JFrame implements ActionListener{
 	JButton inputData;
     JButton encryptButton;
     JButton button3;
     JLabel testLabel;
-    JPanel panel;
+    JPanel panelPseudo;
+    JPanel panelDepseudo;
     JTextField tfKey;
     JLabel keyLabel;
     String path;
     int encryption;
     int key;
-    boolean encryptionType;
+    int encryptionType;
+    
     
 	public GUI()
 	{
 		path="";
-		encryptionType=true;
+		//JTabbedPane jtp = new JTabbedPane();
+		//getContentPane().add(jtp);
 		this.setTitle("Provitro-Tool");
         this.setSize(900, 700);
-        panel = new JPanel();
+        panelPseudo = new JPanel();
+       // panelDepseudo = new JPanel();
  
         // Leeres JLabel-Objekt wird erzeugt
         testLabel = new JLabel("Keine Datei gewählt");
@@ -45,7 +52,7 @@ public class GUI extends JFrame implements ActionListener {
         inputData = new JButton("Datei Laden");
         encryptButton = new JButton ("Ausführen");
         keyLabel = new JLabel("Schlüssel");
-        tfKey = new JTextField("", 15);
+        tfKey = new JTextField("1111111111", 15);
  
         //Buttons werden dem Listener zugeordnet
         inputData.addActionListener(this);
@@ -71,9 +78,9 @@ public class GUI extends JFrame implements ActionListener {
         
  
         //JRadioButtons werden Panel hinzugefügt
-        panel.add(nexus);
-        panel.add(DES);
-        panel.add(RC4);
+        panelPseudo.add(nexus);
+        panelPseudo.add(DES);
+        panelPseudo.add(RC4);
         
         
         //JRadioButtons Pseudo/Depseudo 
@@ -87,25 +94,28 @@ public class GUI extends JFrame implements ActionListener {
         typeEncryption.add(pseudo);
         typeEncryption.add(depseudo);
         if (pseudo.isSelected())
-        	encryptionType=true;
+        	encryptionType=1;
         if (depseudo.isSelected())
-        	encryptionType=false;
+        	encryptionType=2;
         	
         //JRadioButtons werden Panel hinzugefügt
-        panel.add(pseudo);
-        panel.add(depseudo);
+        panelPseudo.add(pseudo);
+        panelPseudo.add(depseudo);
         
-        panel.add(keyLabel);
-        panel.add(tfKey);
+        panelPseudo.add(keyLabel);
+        panelPseudo.add(tfKey);
         
         //Buttons werden dem JPanel hinzugefügt
-        panel.add(inputData);
-        panel.add(encryptButton);
+        panelPseudo.add(inputData);
+        panelPseudo.add(encryptButton);
         
  
         //JLabel wird dem Panel hinzugefügt
-        panel.add(testLabel);
-        this.add(panel);
+        panelPseudo.add(testLabel);
+        this.add(panelPseudo);
+        //jtp.addTab("Pseudonymisierung", panelPseudo);
+        //jtp.addTab("Depseudonymisierung", panelDepseudo);
+
 
 	}
 	public void actionPerformed(ActionEvent e) {
@@ -114,7 +124,7 @@ public class GUI extends JFrame implements ActionListener {
 		if(e.getSource() == this.inputData){
 			
             testLabel.setText((""));
-            FileFilter filter = new FileNameExtensionFilter("Unterstüzte Formate:xlsx und csv ", 
+            FileFilter filter = new FileNameExtensionFilter("Unterstüzte Formate: xlsx und csv ", 
                     "xlsx", "csv"); 
             JFileChooser chooser = new JFileChooser();
             chooser.addChoosableFileFilter(filter);
@@ -131,11 +141,72 @@ public class GUI extends JFrame implements ActionListener {
             if (testDataFormat(testLabel.getText()).equals("csv"))
             {
             	System.out.println("CSV");
+            	TablesOperationsInterface tOp = new CSVOperations();
+            	if (encryptionType==1){
+            	try {
+					tOp.managerEncryptor(testLabel.getText(), encryption, Integer.parseInt(tfKey.getText()));
+					testLabel.setText("");
+					tOp= null;
+            	} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+            	}
+            	if (encryptionType==2){
+            		TablesOperationsInterface  tOp2 = new CSVOperations();
+            		try {
+                		
+    					tOp2.managerDecryptor(testLabel.getText(), encryption, Integer.parseInt(tfKey.getText()));
+    					testLabel.setText("");
+    					
+            		} catch (IOException e1) {
+    					// TODO Auto-generated catch block
+    					e1.printStackTrace();
+    				} catch (Exception e1) {
+    					// TODO Auto-generated catch block
+    					e1.printStackTrace();
+    				}
+                	}
             }
             else 
             {
             	System.out.println("EXCEL");
+            	if (encryptionType==1)
+            	{
+            		TablesOperationsInterface tOp = new ExcelOperations();
+            		try {
+    					tOp.managerEncryptor(testLabel.getText(), encryption, Integer.parseInt(tfKey.getText()));
+    					testLabel.setText("");
+    					tOp= null;
+                	} catch (IOException e1) {
+    					// TODO Auto-generated catch block
+    					e1.printStackTrace();
+    				} catch (Exception e1) {
+    					// TODO Auto-generated catch block
+    					e1.printStackTrace();
+    				}
+            	}
+            	if (encryptionType==2)
+            	{
+            		TablesOperationsInterface  tOp2 = new ExcelOperations();
+            		try {
+                		
+    					tOp2.managerDecryptor(testLabel.getText(), encryption, Integer.parseInt(tfKey.getText()));
+    					testLabel.setText("");
+    					
+            		} catch (IOException e1) {
+    					// TODO Auto-generated catch block
+    					e1.printStackTrace();
+    				} catch (Exception e1) {
+    					// TODO Auto-generated catch block
+    					e1.printStackTrace();
+    				}
+            	}
             }
+            path="";
         }
 	}
 	

@@ -32,7 +32,7 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 import myakinen.icw2.htw_berlin.de.Config.Configuration;
-import myakinen.icw2.htw_berlin.de.Provitro.GUI.GUI;
+import myakinen.icw2.htw_berlin.de.GUI.gui2;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.ConfigurationInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalDataInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.TablesOperationsInterface;
@@ -66,13 +66,13 @@ public class App
     	*/
     	
     	//TablesOperationsInterface eo= new ExcelOperations();
-    	//TablesOperationsInterface ecsv= new CSVOperations ();
+    	TablesOperationsInterface ecsv= new CSVOperations ();
     	
     	//eo.managerEncryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/provitro.xlsx",1,1111111111);
     	//eo.excelManagerDecryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/outputXLS/EncryptedData.xlsx",1,1111111111);
     	
-    	//ecsv.managerEncryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/CVVV.csv", 2, 1111111111);
-    	//ecsv.managerDecryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/outputXLS/EncryptedDataCVS.csv", 2, 1111111111);
+    	//ecsv.managerEncryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/CVVV.csv", 3, 1111111111);
+    	//ecsv.managerDecryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/outputXLS/EncryptedDataCVS.csv", 3, 1111111111);
     	
         
         /*
@@ -95,8 +95,12 @@ public class App
                  config.pathModification(chooser.getSelectedFile().getPath()));
         }
         */
-    	GUI gui= new GUI();
-    	gui.setVisible(true);
+    	//myakinen.icw2.htw_berlin.de.GUI.GUI gui= new myakinen.icw2.htw_berlin.de.GUI.GUI();
+    	//gui.setVisible(true);
+    	
+    	gui2 tp = new gui2();
+        tp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        tp.setVisible(true);
     	}
     
    
