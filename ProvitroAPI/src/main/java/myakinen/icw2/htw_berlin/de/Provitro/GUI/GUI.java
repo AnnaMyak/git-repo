@@ -17,12 +17,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.ConfigurationInterface;
 
 public class GUI extends JFrame implements ActionListener {
-	/*public JFrame mainFrame;
-	public JPanel panel;
-	public JLabel keyLabel;
-	public JTextField tfKey;
-	public JButton encryptButton;
-	public JLabel test;*/
+
 	JButton inputData;
     JButton encryptButton;
     JButton button3;
@@ -30,32 +25,21 @@ public class GUI extends JFrame implements ActionListener {
     JPanel panel;
     JTextField tfKey;
     JLabel keyLabel;
-	public GUI(){
-	
-	/*this.setTitle("Provitro-Tool");
-    this.setSize(900, 700);
-	
-	test= new JLabel("Beispiel JLabel");
-	panel = new JPanel();
-    keyLabel = new JLabel("Schlüssel");
-    panel = new JPanel();
-    tfKey = new JTextField("", 15);
-    encryptButton = new JButton("Daten pseudenonymisieren/depseudonymisieren");
- 
-    encryptButton.addActionListener(this);
+    String path;
+    int encryption;
+    int key;
+    boolean encryptionType;
     
-	panel.add(test);
-	panel.add(tfKey);
-    panel.add(keyLabel);
-    panel.add(tfKey);
-    panel.add(encryptButton);
-    panel.add(test);*/
+	public GUI()
+	{
+		path="";
+		encryptionType=true;
 		this.setTitle("Provitro-Tool");
         this.setSize(900, 700);
         panel = new JPanel();
  
         // Leeres JLabel-Objekt wird erzeugt
-        testLabel = new JLabel();
+        testLabel = new JLabel("Keine Datei gewählt");
  
         //Drei Buttons werden erstellt
         inputData = new JButton("Datei Laden");
@@ -77,6 +61,14 @@ public class GUI extends JFrame implements ActionListener {
         gruppeEncryption.add(nexus);
         gruppeEncryption.add(DES);
         gruppeEncryption.add(RC4);
+        
+        if(nexus.isSelected())
+        	encryption=1;
+        if (DES.isSelected())
+        	encryption=2;
+        if (RC4.isSelected())
+        	encryption=3;
+        
  
         //JRadioButtons werden Panel hinzugefügt
         panel.add(nexus);
@@ -94,10 +86,15 @@ public class GUI extends JFrame implements ActionListener {
         //JRadioButtons werden zur ButtonGroup hinzugefügt
         typeEncryption.add(pseudo);
         typeEncryption.add(depseudo);
- 
+        if (pseudo.isSelected())
+        	encryptionType=true;
+        if (depseudo.isSelected())
+        	encryptionType=false;
+        	
         //JRadioButtons werden Panel hinzugefügt
         panel.add(pseudo);
         panel.add(depseudo);
+        
         panel.add(keyLabel);
         panel.add(tfKey);
         
@@ -109,20 +106,14 @@ public class GUI extends JFrame implements ActionListener {
         //JLabel wird dem Panel hinzugefügt
         panel.add(testLabel);
         this.add(panel);
- 
-    
-    
 
 	}
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		/*if(e.getSource() == this.encryptButton){
-            test.setText(("Button 1 wurde betätigt"));
-        }*/
 		
 		if(e.getSource() == this.inputData){
 			
-            testLabel.setText(("Button 1 wurde betätigt"));
+            testLabel.setText((""));
             FileFilter filter = new FileNameExtensionFilter("Unterstüzte Formate:xlsx und csv ", 
                     "xlsx", "csv"); 
             JFileChooser chooser = new JFileChooser();
@@ -130,19 +121,32 @@ public class GUI extends JFrame implements ActionListener {
             int rueckgabeWert = chooser.showOpenDialog(null);
             if(rueckgabeWert == JFileChooser.APPROVE_OPTION)
             {
-                testLabel.setText(pathModification(chooser.getSelectedFile().getPath()));
+            	path=pathModification(chooser.getSelectedFile().getPath());
+            	testLabel.setText(pathModification(chooser.getSelectedFile().getPath()));
+                
             }
         }
         else if(e.getSource() == this.encryptButton){
-            testLabel.setText("Button 2 wurde betätigt");
+            //testLabel.setText("Button 2 wurde betätigt");
+            if (testDataFormat(testLabel.getText()).equals("csv"))
+            {
+            	System.out.println("CSV");
+            }
+            else 
+            {
+            	System.out.println("EXCEL");
+            }
         }
-        
-        
 	}
 	
 	public String pathModification(String path) {
 		// TODO Auto-generated method stub
 		return path.replace("\\", "/");
+		}
+	public String testDataFormat(String path) {
+		// TODO Auto-generated method stub
+		String substring = path.substring(Math.max(path.length() - 3, 0));
+		return substring;
 		}
 
 }
