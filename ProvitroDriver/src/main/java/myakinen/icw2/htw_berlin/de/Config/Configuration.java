@@ -47,4 +47,6 @@ public class Configuration implements  ConfigurationInterface {
 		return stockArr;
 	}
 
+	
+
 }

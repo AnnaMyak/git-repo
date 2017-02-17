@@ -6,5 +6,6 @@ public interface ConfigurationInterface {
 	
 	public ArrayList<String> getConfigurations(String  configFile);
 	public String[] getProperties();
+	
 
 }
