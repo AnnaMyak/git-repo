@@ -16,6 +16,8 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import myakinen.icw2.htw_berlin.de.Config.Configuration;
+import myakinen.icw2.htw_berlin.de.ProvitroAPI.ConfigurationInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalDataInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalFindingsInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionDCPathos;
@@ -28,10 +30,10 @@ public class EncryptionMedicalFindings implements EncryptionMedicalFindingsInter
 	
 	
 public EncryptionMedicalDataInterface encryptionType;
-	
+public ConfigurationInterface config;	
 	public String Encrypt(String text, int key, int encryption) throws Exception {
-
-		String [] properties = getProperties();
+		config = new Configuration();
+		String [] properties = config.getProperties();
 	
         switch(encryption){
         case 1:

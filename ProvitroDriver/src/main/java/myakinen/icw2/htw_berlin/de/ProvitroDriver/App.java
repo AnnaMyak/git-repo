@@ -54,14 +54,14 @@ public class App
     	
     	*/
     	
-    	//TablesOperationsInterface eo= new ExcelOperations();
+    	TablesOperationsInterface eo= new ExcelOperations();
     	TablesOperationsInterface ecsv= new CSVOperations ();
     	
-    	//eo.excelManagerEncryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/provitro.xlsx",1,1111111111);
+    	//eo.managerEncryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/provitro.xlsx",1,1111111111);
     	//eo.excelManagerDecryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/outputXLS/EncryptedData.xlsx",1,1111111111);
     	
-    	ecsv.managerEncryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/CSV.csv", 1, 1111111111);
-    	
+    	//ecsv.managerEncryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/CVVV.csv", 2, 1111111111);
+    	ecsv.managerDecryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/outputXLS/EncryptedDataCVS.csv", 2, 1111111111);
     	
     	}
 	}
