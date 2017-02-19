@@ -14,7 +14,7 @@ import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.Encrypti
 public class DCPathosEncryptionTest {
 	public EncryptionDCPathos dc;
 	
-	public void EncryptionDCPythos1Test(String path) throws IOException, Exception
+	public void encryptionDCPathosTest(String path) throws IOException, Exception
 	{
 		String line = "";
         EncryptionDCPathos dc = new EncryptionDCPathos();
@@ -38,33 +38,33 @@ public class DCPathosEncryptionTest {
 	
 	@Test
 	//2. Datei
-	public void EncryptionDCPathos2Test() throws IOException, Exception
+	public void EncryptionDCPathosTest() throws IOException, Exception
 	{
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test1.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test2.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test3.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test4.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test5.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test6.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test7.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test8.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test9.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test10.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test11.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test12.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test13.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test14.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test15.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test16.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test17.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test18.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test19.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test20.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test21.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test22.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test23.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test24.csv");
-		EncryptionDCPythos1Test("C:/Users/AnnaToshiba2/Desktop/testDriver/test25.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test1.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test2.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test3.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test4.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test5.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test6.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test7.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test8.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test9.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test10.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test11.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test12.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test13.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test14.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test15.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test16.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test17.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test18.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test19.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test20.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test21.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test22.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test23.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test24.csv");
+		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test25.csv");
 	}
 	
 	
