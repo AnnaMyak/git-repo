@@ -38,6 +38,7 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 import myakinen.icw2.htw_berlin.de.Config.Configuration;
+import myakinen.icw2.htw_berlin.de.GUI.GUIFinal;
 import myakinen.icw2.htw_berlin.de.GUI.gui2;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.ConfigurationInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalDataInterface;
@@ -72,11 +73,11 @@ public class App
     	
     	*/
     	
-    	TablesOperationsInterface eo= new ExcelOperations();
+    	//TablesOperationsInterface eo= new ExcelOperations();
     	//TablesOperationsInterface ecsv= new CSVOperations ();
     	
     	//eo.managerEncryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/provitro.xlsx",4,"1111111111");
-    	eo.managerDecryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/outputXLS/EncryptedData.xlsx",4,"1111111111");
+    	//eo.managerDecryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/outputXLS/EncryptedData.xlsx",4,"1111111111");
     	
     	//ecsv.managerEncryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/DecryptedDatarrrrrrr.csv", 3, "1111111111");
     	//ecsv.managerDecryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/outputXLS/EncryptedDataCVS.csv", 3, "1111111111");
@@ -108,6 +109,10 @@ public class App
     	//gui2 tp = new gui2();
         //tp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //tp.setVisible(true);
+    	
+    	GUIFinal gui = new GUIFinal();
+    	gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	gui.setVisible(true);
     	/*
     	
     	EncryptionMedicalDataInterface d1 = new EncryptionDCPathos();
@@ -126,26 +131,7 @@ public class App
     	*/
 
 
-    	/*DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd--HH-mm-ss");
-    	Date date = new Date();
-    	System.out.println(dateFormat.format(date).toString()); //2016/11/16 12:08:43
-    	System.out.println(FileSystemView.getFileSystemView().getRoots()[0]);
-    	String test=FileSystemView.getFileSystemView().getRoots()[0].toString().replace("\\", "/");
-    	String test2="/GogogoZZZ";
-    	System.out.println(test);
-    	boolean b = false;
-    	File file = new File(test+test2);
-    	if(!file.exists())
-    	{
-    		b = file.mkdirs();
-    	}
-    	if (b)
-			System.out.println("Directory successfully created");
-		else
-			System.out.println("Failed to create directory");
-    	}
-    
-   */
+    	
     	}
 	}
 
