@@ -19,14 +19,14 @@ public class DesEncryptionTest {
 	{
 		des = new EncryptionDes();
 		String line = "";
-		int z=0;
+		
 		try (BufferedReader br = new BufferedReader(new FileReader(path))) 
 		 {
 			 while ((line = br.readLine()) != null)
 			 {
 				 //System.out.println(line);
 				 //String[] finding = line.split(";");
-				 z++;
+				 
 				 String testEncodedData = new String( des.EncryptData(line, "9111111111"));
 				 String testDecodedData = new String (des.DecryptData(testEncodedData, "9111111111"));
 				assertEquals(line,testDecodedData);
