@@ -2,11 +2,15 @@ package myakinen.icw2.htw_berlin.de.ProvitroDriver;
 
 
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -20,6 +24,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.poi.openxml4j.opc.OPCPackage;
@@ -67,11 +72,11 @@ public class App
     	
     	*/
     	
-    	//TablesOperationsInterface eo= new ExcelOperations();
+    	TablesOperationsInterface eo= new ExcelOperations();
     	//TablesOperationsInterface ecsv= new CSVOperations ();
     	
     	//eo.managerEncryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/provitro.xlsx",4,"1111111111");
-    	//eo.managerDecryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/outputXLS/EncryptedData.xlsx",4,"1111111111");
+    	eo.managerDecryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/outputXLS/EncryptedData.xlsx",4,"1111111111");
     	
     	//ecsv.managerEncryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/DecryptedDatarrrrrrr.csv", 3, "1111111111");
     	//ecsv.managerDecryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/outputXLS/EncryptedDataCVS.csv", 3, "1111111111");
@@ -103,7 +108,7 @@ public class App
     	//gui2 tp = new gui2();
         //tp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //tp.setVisible(true);
-    	
+    	/*
     	
     	EncryptionMedicalDataInterface d1 = new EncryptionDCPathos();
     	EncryptionMedicalDataInterface d2 = new EncryptionDes();
@@ -118,15 +123,30 @@ public class App
     	System.out.println("Verscl RC4 "+ d4.EncryptData(s1, key) );
     	System.out.println("Verscl XOR "+ d5.EncryptData(s1, key) );
     	
-    	
-    	
-    	
-    	
-    	
-    	
+    	*/
+
+
+    	/*DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd--HH-mm-ss");
+    	Date date = new Date();
+    	System.out.println(dateFormat.format(date).toString()); //2016/11/16 12:08:43
+    	System.out.println(FileSystemView.getFileSystemView().getRoots()[0]);
+    	String test=FileSystemView.getFileSystemView().getRoots()[0].toString().replace("\\", "/");
+    	String test2="/GogogoZZZ";
+    	System.out.println(test);
+    	boolean b = false;
+    	File file = new File(test+test2);
+    	if(!file.exists())
+    	{
+    		b = file.mkdirs();
+    	}
+    	if (b)
+			System.out.println("Directory successfully created");
+		else
+			System.out.println("Failed to create directory");
     	}
     
-   
+   */
+    	}
 	}
 
     

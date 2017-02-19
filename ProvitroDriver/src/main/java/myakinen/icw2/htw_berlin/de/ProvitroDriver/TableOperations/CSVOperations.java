@@ -4,9 +4,14 @@ import java.io.BufferedReader;
 import java.io.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+
+import javax.swing.filechooser.FileSystemView;
 
 import myakinen.icw2.htw_berlin.de.Config.Configuration;
 import myakinen.icw2.htw_berlin.de.EncryptionMedicalFindings.EncryptionMedicalFindings;
@@ -32,6 +37,15 @@ public class CSVOperations implements TablesOperationsInterface {
 	@Override
 	public void managerEncryptor(String path, int encryption, String key) throws IOException, Exception {
 		// TODO Auto-generated method stub
+		String provitroDirectory=FileSystemView.getFileSystemView().getRoots()[0].toString().replace("\\", "/")+"/ProvitroToolOutputs/Encrypted/";
+		File provitroDir= new File(provitroDirectory);
+		boolean makeDir=false;
+		
+		
+		
+		
+		
+		
 		
 		encryptionInstance = new Encryption().getEncryption(encryption);
 		String line = "";
@@ -86,7 +100,16 @@ public class CSVOperations implements TablesOperationsInterface {
 
 				 }
 			//System.out.println("Size " + list.size());
-			FileWriter writer = new FileWriter("C:/Users/AnnaToshiba2/Desktop/ICW2/outputXLS/EncryptedDataCVS.csv",false);
+			//Make Directory
+			 if(!provitroDir.exists())
+		    	{
+					makeDir = provitroDir.mkdirs();
+		    	}
+			 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd--HH-mm-ss");
+		    	Date date = new Date();
+				String filePath=provitroDirectory+"--EncryptedDataCSV--"+dateFormat.format(date).toString()+".csv";
+			 
+			FileWriter writer = new FileWriter(filePath,false);
 		 	for(ArrayList<String> finding: list)
 		 	{
 		 		for (String str :finding)
@@ -108,6 +131,9 @@ public class CSVOperations implements TablesOperationsInterface {
 	@Override
 	public void managerDecryptor(String path, int encryption, String key) throws IOException, Exception {
 		// TODO Auto-generated method stub
+		String provitroDirectory=FileSystemView.getFileSystemView().getRoots()[0].toString().replace("\\", "/")+"/ProvitroToolOutputs/Decrypted/";
+		File provitroDir= new File(provitroDirectory);
+		boolean makeDir=false;
 		String line = "";
 		//encrMedFind = new EncyptionMedicalFindingsSecond ();
 		encrMedFind = new EncryptionMedicalFindings ();
@@ -152,11 +178,19 @@ public class CSVOperations implements TablesOperationsInterface {
                 	   //System.out.println(fullFinding.get(5));
                    }
                    list.add(fullFinding);
-                   
-
 				 }
+			 
+			//Make Directory
+			 if(!provitroDir.exists())
+		    	{
+					makeDir = provitroDir.mkdirs();
+		    	}
+			 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd--HH-mm-ss");
+		    	Date date = new Date();
+				String filePath=provitroDirectory+"--DecryptedDataCSV--"+dateFormat.format(date).toString()+".csv";
+			  
 			//System.out.println("Size " + list.size());
-			FileWriter writer = new FileWriter("C:/Users/AnnaToshiba2/Desktop/ICW2/outputXLS/DecryptedDataCVS.csv",false);
+			FileWriter writer = new FileWriter(filePath,false);
 		 	for(ArrayList<String> finding: list)
 		 	{
 		 		for (String str :finding)

@@ -8,11 +8,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.swing.filechooser.FileSystemView;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -48,6 +52,9 @@ public class ExcelOperations implements TablesOperationsInterface  {
 
 	public void managerEncryptor(String path, int encryption, String key) throws Exception
 	{
+		String provitroDirectory=FileSystemView.getFileSystemView().getRoots()[0].toString().replace("\\", "/")+"/ProvitroToolOutputs/Encrypted/";
+		File provitroDir= new File(provitroDirectory);
+		boolean makeDir=false;
 		boolean testDataStructure=true;
 		config = new Configuration();
 		ArrayList<String> configurations = config.getConfigurations("Config2");
@@ -123,7 +130,16 @@ public class ExcelOperations implements TablesOperationsInterface  {
         	   }
         	}
         try {
-            FileOutputStream outputStream = new FileOutputStream("C:/Users/AnnaToshiba2/Desktop/ICW2/outputXLS/EncryptedData"+".xlsx");
+        	//Make Directory
+			 if(!provitroDir.exists())
+		    	{
+					makeDir = provitroDir.mkdirs();
+		    	}
+			 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd--HH-mm-ss");
+		    	Date date = new Date();
+				String filePath=provitroDirectory+"--EncryptedDataExcel--"+dateFormat.format(date).toString()+".xlsx";
+			 
+            FileOutputStream outputStream = new FileOutputStream(filePath);
             workbook.write(outputStream);
             workbook.close();
         } catch (FileNotFoundException e) {
@@ -144,6 +160,9 @@ public class ExcelOperations implements TablesOperationsInterface  {
 	@Override
 	public void managerDecryptor(String path, int encryption, String key) throws IOException, Exception {
 		// TODO Auto-generated method stub
+		String provitroDirectory=FileSystemView.getFileSystemView().getRoots()[0].toString().replace("\\", "/")+"/ProvitroToolOutputs/Decrypted/";
+		File provitroDir= new File(provitroDirectory);
+		boolean makeDir=false;
 		boolean testDataStructure=true;
 		config = new Configuration();
 		ArrayList<String> configurations = config.getConfigurations("Config2");;
@@ -222,7 +241,17 @@ public class ExcelOperations implements TablesOperationsInterface  {
         	   }
         	}
         try {
-            FileOutputStream outputStream = new FileOutputStream("C:/Users/AnnaToshiba2/Desktop/ICW2/outputXLS/DecryptedData"+".xlsx");
+        	//Make Directory
+			 if(!provitroDir.exists())
+		    	{
+					makeDir = provitroDir.mkdirs();
+		    	}
+			 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd--HH-mm-ss");
+		    	Date date = new Date();
+				String filePath=provitroDirectory+"--DecryptedDataExcel--"+dateFormat.format(date).toString()+".xlsx";
+			 
+        	
+            FileOutputStream outputStream = new FileOutputStream(filePath);
             workbook.write(outputStream);
             workbook.close();
         } catch (FileNotFoundException e) {
