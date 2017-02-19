@@ -9,12 +9,14 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.TablesOperationsInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.TableOperations.CSVOperations;
@@ -29,12 +31,14 @@ public class GUIFinal extends JFrame implements ActionListener {
 	private JButton executionPseu;
 	private JLabel labelSelectedFilePseu;
 	private JTextField keyPseu;
+	private JLabel resultPseu;
 	
 	//Depseudonym
 	private JButton inputFileDepseu;
 	private JButton executionDepseu;
 	private JLabel labelSelectedFileDepseu;
 	private JTextField keyDepseu;
+	private JLabel resultDepseu;
 	
 	public GUIFinal()
 	{
@@ -44,6 +48,7 @@ public class GUIFinal extends JFrame implements ActionListener {
 	    getContentPane().add(tappedPanel);
 	    JPanel pseudonym = new JPanel();
 	    JPanel depseudonym = new JPanel();
+	    resultPseu= new JLabel();
 	    
 	    //Pseudonym
 	    JLabel labelPseuTitel = new JLabel("Pseudonymisieren");
@@ -78,6 +83,7 @@ public class GUIFinal extends JFrame implements ActionListener {
 	    executionPseu = new JButton ("Ausführen");
 	    pseudonym.add(labelPseuTitel);
 	    pseudonym.add(keyPseu);
+	   
 	    
 	    //Add Buttons group Pseudonym
 	    pseudonym.add(nexusPseu);
@@ -92,7 +98,7 @@ public class GUIFinal extends JFrame implements ActionListener {
 	    pseudonym.add(labelSelectedFilePseu);
 	    pseudonym.add(inputFilePseu);
 	    pseudonym.add(executionPseu);
-	    
+	    pseudonym.add(resultPseu); 
 	    
 	    
 	    //Depseudonym
@@ -100,6 +106,7 @@ public class GUIFinal extends JFrame implements ActionListener {
 	    labelSelectedFileDepseu = new JLabel("Noch keine Datei geladen");
 	    inputFileDepseu = new JButton("Datei Laden");
 	    keyDepseu = new JTextField("1111111111", 15);
+	    resultDepseu = new JLabel();
 	    
 	    ButtonGroup gruppeEncryptionDepseu = new ButtonGroup();
 	    JRadioButton nexusDepseu = new JRadioButton("Nexus");
@@ -137,12 +144,16 @@ public class GUIFinal extends JFrame implements ActionListener {
 	    depseudonym.add(labelSelectedFileDepseu);
 	    depseudonym.add(inputFileDepseu);
 	    depseudonym.add(executionDepseu);
+	    depseudonym.add(resultDepseu); 
 	    
 	    //ActionListeners
 	    inputFileDepseu.addActionListener(this);
 	    executionDepseu.addActionListener(this);
 	    inputFilePseu.addActionListener(this);
 	    executionPseu.addActionListener(this);
+	    
+	    
+	    
 	    
 	    //build gui
 	    tappedPanel.addTab("Pseudonymisieren", pseudonym);
@@ -152,31 +163,40 @@ public class GUIFinal extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		String rootDirectory=FileSystemView.getFileSystemView().getRoots()[0].toString().replace("\\", "/");
+		
 		if(e.getSource() == this.inputFilePseu)
 		{
 			FileFilter filter = new FileNameExtensionFilter("Unterstüzte Formate: xlsx und csv ", 
 	                "xlsx", "csv"); 
-	        JFileChooser chooser = new JFileChooser();
+	        JFileChooser chooser = new JFileChooser(rootDirectory);
 	        chooser.addChoosableFileFilter(filter);
 	        int rueckgabeWert = chooser.showOpenDialog(null);
 	        if(rueckgabeWert == JFileChooser.APPROVE_OPTION)
 	        {
 	        	
 	        	labelSelectedFilePseu.setText(chooser.getSelectedFile().getPath().replace("\\", "/"));
-	            
+	        	resultPseu.setText("");
+		        
 	        }
 		}
 		
 		if (e.getSource()==this.executionPseu)
 		{
+			if (keyPseu.getText().length()==0)
+			{
+				JOptionPane.showMessageDialog(this, "Geben Sie bitte den Schlüssel ein");
+			}
 			if (testDataFormat(labelSelectedFilePseu.getText()).equals(".csv"))
 			{
 				table = new CSVOperations();
 				try {
 					table.managerEncryptor(labelSelectedFilePseu.getText(), encryption, keyPseu.getText());
+					JOptionPane.showMessageDialog(this, "Die Daten sind verschlüsselt. Sie finden die Ergebnisse in "+ rootDirectory+"/ProvitroToolOutputs/Encrypted/");
+					resultPseu.setText("Ihre Ergebnisse finden Sie unter "+rootDirectory+"/ProvitroToolOutputs/Encrypted/");
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(this, "Irgendwas schief gelaufen.. Versuchen Sie noch mal.");
 				}
 			}
 			else if (testDataFormat(labelSelectedFilePseu.getText()).equals("xlsx"))
@@ -184,37 +204,52 @@ public class GUIFinal extends JFrame implements ActionListener {
 				table = new ExcelOperations();
 				try {
 					table.managerEncryptor(labelSelectedFilePseu.getText(), encryption, keyPseu.getText());
+					JOptionPane.showMessageDialog(this, "Die Daten sind verschlüsselt. Sie finden die Ergebnisse in "+ rootDirectory+"/ProvitroToolOutputs/Encrypted/");
+					resultPseu.setText("Ihre Ergebnisse finden Sie unter "+rootDirectory+"/ProvitroToolOutputs/Encrypted/");
+					
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					JOptionPane.showMessageDialog(this, "Irgendwas schief gelaufen.. Versuchen Sie noch mal.");
+					
 				}
 			}
 			else 
+				{
 				System.out.println("Das Datenformat wird nicht unterstützt oder Sie haben keine Datei geladen");
+				JOptionPane.showMessageDialog(this, "Sie haben keine Datei geladen oder das Datenformat wird nicht unterstützt. Gesuchte Formate sind :	.csv oder .xlsx");
+				}
 		}
 		
 		if (e.getSource()==this.inputFileDepseu)
 		{
 			FileFilter filter2 = new FileNameExtensionFilter("Unterstüzte Formate: xlsx und csv ", 
 	                "xlsx", "csv"); 
-	        JFileChooser chooser2 = new JFileChooser();
+	        JFileChooser chooser2 = new JFileChooser(rootDirectory);
 	        chooser2.addChoosableFileFilter(filter2);
 	        int rueckgabeWert = chooser2.showOpenDialog(null);
 	        if(rueckgabeWert == JFileChooser.APPROVE_OPTION)
 	        {
 	        	
 	        	labelSelectedFileDepseu.setText(chooser2.getSelectedFile().getPath().replace("\\", "/"));
-	            
+	            resultDepseu.setText("");
 	        }
 		}
 		
 		if (e.getSource()==this.executionDepseu)
 		{
+			if (keyDepseu.getText().length()==0)
+			{
+				JOptionPane.showMessageDialog(this, "Geben Sie bitte den Schlüssel ein");
+			}
 			if (testDataFormat(labelSelectedFileDepseu.getText()).equals(".csv"))
 			{
 				table = new CSVOperations();
 				try {
 					table.managerDecryptor(labelSelectedFileDepseu.getText(), encryption, keyDepseu.getText());
+					JOptionPane.showMessageDialog(this, "Die Daten sind verschlüsselt. Sie finden die Ergebnisse in "+ rootDirectory+"/ProvitroToolOutputs/Decrypted/");
+					resultDepseu.setText("Ihre Ergebnisse finden Sie unter "+rootDirectory+"/ProvitroToolOutputs/Decrypted/");
+					
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -225,14 +260,18 @@ public class GUIFinal extends JFrame implements ActionListener {
 				table = new ExcelOperations();
 				try {
 					table.managerDecryptor(labelSelectedFileDepseu.getText(), encryption, keyDepseu.getText());
+					JOptionPane.showMessageDialog(this, "Die Daten sind verschlüsselt. Sie finden die Ergebnisse in "+ rootDirectory+"/ProvitroToolOutputs/Decrypted/");
+					resultDepseu.setText("Ihre Ergebnisse finden Sie unter "+rootDirectory+"/ProvitroToolOutputs/Decrypted/");
+					
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
-			else 
+			else {
 				System.out.println("Das Datenformat wird nicht unterstützt oder Sie haben keine Datei geladen");
-		
+				JOptionPane.showMessageDialog(this, "Sie haben keine Datei geladen oder das Datenformat wird nicht unterstützt. Gesuchte Formate sind : .csv oder .xlsx");
+			}
 		}
 		
 	}
