@@ -12,15 +12,17 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import myakinen.icw2.htw_berlin.de.Config.Configuration;
+import myakinen.icw2.htw_berlin.de.ProvitroAPI.ConfigurationInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalDataInterface;
 public class EncyptionMedicalFindingsSecond implements  EncryptionMedicalFindingsInterface{
-
+	public ConfigurationInterface config;
 	@Override
 	public String Encrypt(String text, String key, int encryption) throws Exception {
 		// TODO Auto-generated method stub
-		String [] properties = getProperties();
-		
-       
+		config = new Configuration ();
+		String [] properties = config.getProperties();
+		       
          String result="";
          String[] spl=text.split(" +");
         for (int i=0; i<spl.length; i++)
@@ -56,20 +58,6 @@ public class EncyptionMedicalFindingsSecond implements  EncryptionMedicalFinding
 		return "Depseudonymisierung ist nicht möglich";
 	}
 	
-	public String[] getProperties () 
-	{
-		String fileName = "properties";
-		ArrayList<String> properties = new ArrayList<>();
-
-		try (BufferedReader br = Files.newBufferedReader(Paths.get(fileName))) {
-			properties = (ArrayList<String>) br.lines().collect(Collectors.toList());
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		String[] stockArr = new String[properties.size()];
-		stockArr = properties.toArray(stockArr);
-		return stockArr;
-	}
+	
 
 }

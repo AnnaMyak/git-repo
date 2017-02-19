@@ -30,6 +30,7 @@ import myakinen.icw2.htw_berlin.de.ProvitroAPI.ConfigurationInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalDataInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalFindingsInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.TablesOperationsInterface;
+import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.Encryption;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionDes;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionNexus;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionRC4;
@@ -39,7 +40,7 @@ import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.Encrypti
 
 public class ExcelOperations implements TablesOperationsInterface  {
 
-	private EncryptionMedicalDataInterface encryptionType;
+	private EncryptionMedicalDataInterface encryptionInstance;
 	private EncryptionMedicalFindingsInterface encrMedFind;
 	private ConfigurationInterface config;
 	
@@ -56,27 +57,7 @@ public class ExcelOperations implements TablesOperationsInterface  {
 		XSSFWorkbook wb;
 		encrMedFind = new EncryptionMedicalFindings ();
 		//encrMedFind = new EncyptionMedicalFindingsSecond ();
-		
-		switch(encryption){
-        case 1:
-        	encryptionType = new EncryptionNexus();
-            break;
-        case 2:
-        	encryptionType = new EncryptionDes();
-            break;
-            
-        case 3:
-        	encryptionType = new EncryptionRC4();
-        	break;
-        	
-        case 4:
-        	encryptionType = new EncryptionXOR();
-        	break;	
-        
-        default:
-            System.out.println("Verschlüssung ist nicht gewählt");
-            break;
-        }
+		encryptionInstance= new Encryption ().getEncryption(encryption);
 		
 		try {
 			wb = new XSSFWorkbook(new File(path));
@@ -108,18 +89,15 @@ public class ExcelOperations implements TablesOperationsInterface  {
 			    {
 			    	finding.add(formatter.formatCellValue(row.getCell(i)));				    	
 			    }
-			    
-        		
+			            		
         		//Encrypt Data
         		
         		if (list.size() >0)
         		{
-        			finding.set(1, encryptionType.EncryptData(finding.get(1), key));
+        			finding.set(1, encryptionInstance.EncryptData(finding.get(1), key));
         			finding.set(5, encrMedFind.Encrypt(finding.get(5), key, encryption));
         		}
-			    
-        		
-        		
+
         		list.add(finding);
         		finding= new ArrayList<String>();
         		
@@ -175,26 +153,7 @@ public class ExcelOperations implements TablesOperationsInterface  {
 		XSSFWorkbook wb;
 		encrMedFind = new EncryptionMedicalFindings ();
 		//encrMedFind = new EncyptionMedicalFindingsSecond ();
-		
-		switch(encryption){
-        case 1:
-        	encryptionType = new EncryptionNexus();
-            break;
-        case 2:
-        	encryptionType = new EncryptionDes();
-            break;
-            
-        case 3:
-        	encryptionType = new EncryptionRC4();
-        	break;
-        case 4:
-        	encryptionType = new EncryptionRC4();
-        	break;
-        
-        default:
-            System.out.println("Verschlüssung ist nicht gewählt");
-            break;
-        }
+		encryptionInstance= new Encryption().getEncryption(encryption);
 		
 		try {
 			wb = new XSSFWorkbook(new File(path));
@@ -232,7 +191,7 @@ public class ExcelOperations implements TablesOperationsInterface  {
         		
         		if (list.size() >0)
         		{
-        			finding.set(1, encryptionType.DecryptData(finding.get(1), key));
+        			finding.set(1, encryptionInstance.DecryptData(finding.get(1), key));
         			finding.set(5, encrMedFind.Decrypt(finding.get(5), key, encryption));
         		}
 			    

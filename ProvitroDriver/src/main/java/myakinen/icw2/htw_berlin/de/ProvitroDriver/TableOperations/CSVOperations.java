@@ -1,7 +1,7 @@
 package myakinen.icw2.htw_berlin.de.ProvitroDriver.TableOperations;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,9 +12,11 @@ import myakinen.icw2.htw_berlin.de.Config.Configuration;
 import myakinen.icw2.htw_berlin.de.EncryptionMedicalFindings.EncryptionMedicalFindings;
 import myakinen.icw2.htw_berlin.de.EncryptionMedicalFindings.EncyptionMedicalFindingsSecond;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.ConfigurationInterface;
+import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalDataInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalFindingsInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.TablesOperationsInterface;
+import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.Encryption;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionDes;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionNexus;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionRC4;
@@ -23,47 +25,35 @@ import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.Encrypti
 public class CSVOperations implements TablesOperationsInterface {
 
 	private ConfigurationInterface config;
-	private EncryptionMedicalDataInterface encryptionType;
+	private EncryptionMedicalDataInterface encryptionInstance;
 	private EncryptionMedicalFindingsInterface encrMedFind;
+	
 	
 	@Override
 	public void managerEncryptor(String path, int encryption, String key) throws IOException, Exception {
 		// TODO Auto-generated method stub
 		
+		encryptionInstance = new Encryption().getEncryption(encryption);
 		String line = "";
 		//encrMedFind = new EncyptionMedicalFindingsSecond ();
+		
 		encrMedFind = new EncryptionMedicalFindings ();
 		boolean testDataStructure= true;
+		
 		config = new Configuration();
-		ArrayList<String> configurations = config.getConfigurations("Config");
+		ArrayList<String> configurations = config.getConfigurations("Config2");
 		ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
 		ArrayList<String> fullFinding;
-		switch(encryption){
-        case 1:
-        	encryptionType = new EncryptionNexus();
-            break;
-        case 2:
-        	encryptionType = new EncryptionDes();
-            break;
-            
-        case 3:
-        	encryptionType = new EncryptionRC4();
-        	break;
-        case 4:
-        	encryptionType = new EncryptionRC4();
-        	break;
-        
-        default:
-            System.out.println("Verschlüssung ist nicht gewählt");
-            break;
-        }
+		
 		
 		if (testDataStructure)
 		{
-		 try (BufferedReader br = new BufferedReader(new FileReader(path))) 
+		 try (BufferedReader br = new BufferedReader(new InputStreamReader(
+			     new FileInputStream(path), "UTF-8"))) 
 		 {
 			 while ((line = br.readLine()) != null)
 			 {
+				 //System.out.println(line);
 				 String[] finding = line.split(";");
 				 
 				 //test Configuration
@@ -87,7 +77,7 @@ public class CSVOperations implements TablesOperationsInterface {
                  	fullFinding=convertToList(finding);
                  	if (list.size()>0)
                    {
-                	   fullFinding.set(1, encryptionType.EncryptData(fullFinding.get(1), key));
+                	   fullFinding.set(1, encryptionInstance.EncryptData(fullFinding.get(1), key));
                 	   fullFinding.set(5, encrMedFind.Encrypt(fullFinding.get(5), key, encryption));
                 	   //System.out.println(fullFinding.get(5));
                    }
@@ -123,28 +113,11 @@ public class CSVOperations implements TablesOperationsInterface {
 		encrMedFind = new EncryptionMedicalFindings ();
 		boolean testDataStructure= true;
 		config = new Configuration();
-		ArrayList<String> configurations = config.getConfigurations("Config");
+		ArrayList<String> configurations = config.getConfigurations("Config2");
 		ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
 		ArrayList<String> fullFinding;
-		switch(encryption){
-        case 1:
-        	encryptionType = new EncryptionNexus();
-            break;
-        case 2:
-        	encryptionType = new EncryptionDes();
-            break;
-            
-        case 3:
-        	encryptionType = new EncryptionRC4();
-        	break;
-        case 4:
-        	encryptionType = new EncryptionXOR();
-        	break;
-        
-        default:
-            System.out.println("Verschlüssung ist nicht gewählt");
-            break;
-        }
+		encryptionInstance= new Encryption().getEncryption(encryption);
+		
 		
 		if (testDataStructure)
 		{
@@ -157,7 +130,6 @@ public class CSVOperations implements TablesOperationsInterface {
 				 //test Configuration
 				 if (list.size()==0)
 				 {
-
 
                    if (configurations.equals(new ArrayList<String>(Arrays.asList(finding))))
                    {
@@ -175,7 +147,7 @@ public class CSVOperations implements TablesOperationsInterface {
                  	fullFinding=convertToList(finding);
                  	if (list.size()>0)
                    {
-                	   fullFinding.set(1, encryptionType.DecryptData(fullFinding.get(1), key));
+                	   fullFinding.set(1, encryptionInstance.DecryptData(fullFinding.get(1), key));
                 	   fullFinding.set(5, encrMedFind.Decrypt(fullFinding.get(5), key, encryption));
                 	   //System.out.println(fullFinding.get(5));
                    }
@@ -204,7 +176,7 @@ public class CSVOperations implements TablesOperationsInterface {
 		
 	}
 	
-	public ArrayList convertToList(String[] arr)
+	public ArrayList<String> convertToList(String[] arr)
 	{
 		ArrayList<String> list= new ArrayList<String>();
 		for(int i=0; i<arr.length; i++)

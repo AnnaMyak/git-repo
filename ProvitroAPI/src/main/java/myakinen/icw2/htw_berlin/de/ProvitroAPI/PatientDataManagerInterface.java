@@ -5,3 +5,4 @@ public interface PatientDataManagerInterface {
 	public boolean isDCPathosOriginalData(String patientData);
 	public boolean isDCPathosEncryptedData(String patientData);
 }
+
