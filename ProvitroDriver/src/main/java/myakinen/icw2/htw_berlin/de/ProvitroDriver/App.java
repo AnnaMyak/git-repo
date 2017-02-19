@@ -20,6 +20,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.bind.DatatypeConverter;
 
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.Cell;
@@ -40,6 +41,7 @@ import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.Encrypti
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionDes;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionNexus;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionRC4;
+import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionXOR;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.TableOperations.CSVOperations;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.TableOperations.ExcelOperations;
 
@@ -66,10 +68,10 @@ public class App
     	*/
     	
     	//TablesOperationsInterface eo= new ExcelOperations();
-    	TablesOperationsInterface ecsv= new CSVOperations ();
+    	//TablesOperationsInterface ecsv= new CSVOperations ();
     	
     	//eo.managerEncryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/provitro.xlsx",1,1111111111);
-    	//eo.excelManagerDecryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/outputXLS/EncryptedData.xlsx",1,1111111111);
+    	//eo.managerDecryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/outputXLS/EncryptedData.xlsx",1,1111111111);
     	
     	//ecsv.managerEncryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/CVVV.csv", 3, 1111111111);
     	//ecsv.managerDecryptor("C:/Users/AnnaToshiba2/Desktop/ICW2/outputXLS/EncryptedDataCVS.csv", 3, 1111111111);
@@ -98,9 +100,31 @@ public class App
     	//myakinen.icw2.htw_berlin.de.GUI.GUI gui= new myakinen.icw2.htw_berlin.de.GUI.GUI();
     	//gui.setVisible(true);
     	
-    	gui2 tp = new gui2();
-        tp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        tp.setVisible(true);
+    	//gui2 tp = new gui2();
+        //tp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //tp.setVisible(true);
+    	
+    	
+    	EncryptionMedicalDataInterface d1 = new EncryptionDCPathos();
+    	EncryptionMedicalDataInterface d2 = new EncryptionDes();
+    	EncryptionMedicalDataInterface d3 = new EncryptionNexus();
+    	EncryptionMedicalDataInterface d4 = new EncryptionRC4();
+    	EncryptionMedicalDataInterface d5 = new EncryptionXOR();
+    	String s1= "//++Jojojoju+/";
+    	String key ="9111111111";
+    	//System.out.println("Verscl DC "+ d1.EncryptData(s1, "1234") );
+    	System.out.println("Verscl Des "+ d2.EncryptData(s1, key) );
+    	System.out.println("Verscl Nex "+ d3.EncryptData(s1, "1234") );
+    	System.out.println("Verscl RC4 "+ d4.EncryptData(s1, key) );
+    	System.out.println("Verscl XOR "+ d5.EncryptData(s1, key) );
+    	
+    	
+    
+    	
+    	
+    	
+    	
+    	
     	}
     
    

@@ -15,7 +15,7 @@ import javax.xml.bind.DatatypeConverter;
 
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalDataInterface;
 
-public class EncryptionRC4 implements EncryptionMedicalDataInterface  {
+public class EncryptionRC4  implements EncryptionMedicalDataInterface {
 	private final static Logger LOGGER = Logger.getLogger(EncryptionRC4.class.getName());
 
 	/*
@@ -77,24 +77,18 @@ public class EncryptionRC4 implements EncryptionMedicalDataInterface  {
 	}
 
 
-	public String EncryptData(String patientData, int key) throws Exception {
+	public String EncryptData(String patientData, String key) throws Exception {
 		// TODO Auto-generated method stub
-				StringBuilder provitKeyInt = new StringBuilder();
-				provitKeyInt.append("");
-				provitKeyInt.append(key);
-				String provitKey = provitKeyInt.toString();
-				EncryptionRC4 pseudGen = new EncryptionRC4(provitKey);
+				
+				EncryptionRC4 pseudGen = new EncryptionRC4(key);
 				return pseudGen.pseudonym(patientData);
 	}
 
 
-	public String DecryptData(String patientData, int key) throws Exception {
+	public String DecryptData(String patientData, String key) throws Exception {
 		// TODO Auto-generated method stub
-				StringBuilder provitKeyInt = new StringBuilder();
-				provitKeyInt.append("");
-				provitKeyInt.append(key);
-				String provitKey = provitKeyInt.toString();
-				EncryptionRC4 pseudGen = new EncryptionRC4(provitKey);
+				
+				EncryptionRC4 pseudGen = new EncryptionRC4(key);
 				return pseudGen.depseudonym(patientData);
 	}
 

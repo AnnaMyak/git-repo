@@ -24,6 +24,7 @@ import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.Encrypti
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionDes;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionNexus;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionRC4;
+import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionXOR;
 
 public class EncryptionMedicalFindings implements EncryptionMedicalFindingsInterface
 {
@@ -31,7 +32,7 @@ public class EncryptionMedicalFindings implements EncryptionMedicalFindingsInter
 	
 public EncryptionMedicalDataInterface encryptionType;
 public ConfigurationInterface config;	
-	public String Encrypt(String text, int key, int encryption) throws Exception {
+	public String Encrypt(String text, String key, int encryption) throws Exception {
 		config = new Configuration();
 		String [] properties = config.getProperties();
 	
@@ -45,6 +46,9 @@ public ConfigurationInterface config;
             
         case 3:
         	encryptionType = new EncryptionRC4();
+        	break;
+        case 4:
+        	encryptionType = new EncryptionXOR();
         	break;
         
         default:
@@ -79,7 +83,7 @@ public ConfigurationInterface config;
 	}
 
 
-	public String Decrypt(String text, int key, int encryption) throws Exception {
+	public String Decrypt(String text, String key, int encryption) throws Exception {
 		// TODO Auto-generated method stub
 		String[] properties = getProperties();
 		//int iterator =constants.length;
@@ -94,6 +98,9 @@ public ConfigurationInterface config;
             
         case 3:
         	encryptionType = new EncryptionRC4();
+        	break;
+        case 4:
+        	encryptionType = new EncryptionXOR();
         	break;
         
         default:

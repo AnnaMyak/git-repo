@@ -10,11 +10,11 @@ public class EncryptionNexus implements EncryptionMedicalDataInterface {
 	//Second Key 
 	public static final int SECONDKEY = 100;
 	
-	public String EncryptData(String patientData, int key) throws Exception{
+	public String EncryptData(String patientData, String key) throws Exception{
 		// TODO Auto-generated method stub
 		String result="";
 		char[] charArr= patientData.toCharArray();
-		char[] firstKeyToString= Integer.toString(key).toCharArray(); 
+		char[] firstKeyToString= key.toCharArray(); 
 		int[] intArr= new int[firstKeyToString.length];
 		List<Integer> intArray = new ArrayList<Integer>();
 		for (int i=0; i<charArr.length; i++)		
@@ -38,7 +38,7 @@ public class EncryptionNexus implements EncryptionMedicalDataInterface {
 		return result;
 	}
 
-	public String DecryptData(String patientData, int key) throws Exception{
+	public String DecryptData(String patientData, String key) throws Exception{
 		// TODO Auto-generated method stub
 		int iterator = patientData.length()/3;
 		List<String> stringArray= new ArrayList<String>();
@@ -56,7 +56,7 @@ public class EncryptionNexus implements EncryptionMedicalDataInterface {
 		{
 			intArray.add(Integer.parseInt(s));
 		}
-		char[] firstKeyToString= Integer.toString(key).toCharArray();
+		char[] firstKeyToString= key.toCharArray();
 		int[] intArr= new int[firstKeyToString.length];
 		for (int i=0; i<firstKeyToString.length; i++)
 		{

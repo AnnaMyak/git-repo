@@ -7,6 +7,6 @@ import java.io.IOException;
 public interface TablesOperationsInterface {
 	
 	
-	public void managerEncryptor(String path, int encryption, int key) throws IOException, Exception;
-	public void managerDecryptor(String path, int encryption, int key) throws IOException, Exception;
+	public void managerEncryptor(String path, int encryption, String key) throws IOException, Exception;
+	public void managerDecryptor(String path, int encryption, String key) throws IOException, Exception;
 }

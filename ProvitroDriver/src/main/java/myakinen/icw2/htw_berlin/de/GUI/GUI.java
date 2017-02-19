@@ -21,7 +21,13 @@ import myakinen.icw2.htw_berlin.de.ProvitroDriver.TableOperations.CSVOperations;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.TableOperations.ExcelOperations;
 
 public class GUI extends JFrame implements ActionListener{
-	JButton inputData;
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	/*JButton inputData;
     JButton encryptButton;
     JButton button3;
     JLabel testLabel;
@@ -219,5 +225,5 @@ public class GUI extends JFrame implements ActionListener{
 		String substring = path.substring(Math.max(path.length() - 3, 0));
 		return substring;
 		}
-
+*/
 }

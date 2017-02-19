@@ -33,6 +33,7 @@ import myakinen.icw2.htw_berlin.de.ProvitroAPI.TablesOperationsInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionDes;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionNexus;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionRC4;
+import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionXOR;
 
 
 
@@ -44,7 +45,7 @@ public class ExcelOperations implements TablesOperationsInterface  {
 	
 	
 
-	public void managerEncryptor(String path, int encryption, int key) throws Exception
+	public void managerEncryptor(String path, int encryption, String key) throws Exception
 	{
 		boolean testDataStructure=true;
 		config = new Configuration();
@@ -67,6 +68,10 @@ public class ExcelOperations implements TablesOperationsInterface  {
         case 3:
         	encryptionType = new EncryptionRC4();
         	break;
+        	
+        case 4:
+        	encryptionType = new EncryptionXOR();
+        	break;	
         
         default:
             System.out.println("Verschlüssung ist nicht gewählt");
@@ -159,7 +164,7 @@ public class ExcelOperations implements TablesOperationsInterface  {
 	
 
 	@Override
-	public void managerDecryptor(String path, int encryption, int key) throws IOException, Exception {
+	public void managerDecryptor(String path, int encryption, String key) throws IOException, Exception {
 		// TODO Auto-generated method stub
 		boolean testDataStructure=true;
 		config = new Configuration();
@@ -180,6 +185,9 @@ public class ExcelOperations implements TablesOperationsInterface  {
             break;
             
         case 3:
+        	encryptionType = new EncryptionRC4();
+        	break;
+        case 4:
         	encryptionType = new EncryptionRC4();
         	break;
         

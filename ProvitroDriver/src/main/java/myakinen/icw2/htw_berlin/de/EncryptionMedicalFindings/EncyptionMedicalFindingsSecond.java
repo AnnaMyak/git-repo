@@ -16,7 +16,7 @@ import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalDataInterface;
 public class EncyptionMedicalFindingsSecond implements  EncryptionMedicalFindingsInterface{
 
 	@Override
-	public String Encrypt(String text, int key, int encryption) throws Exception {
+	public String Encrypt(String text, String key, int encryption) throws Exception {
 		// TODO Auto-generated method stub
 		String [] properties = getProperties();
 		
@@ -50,7 +50,7 @@ public class EncyptionMedicalFindingsSecond implements  EncryptionMedicalFinding
 	}
 
 	@Override
-	public String Decrypt(String text, int key, int encryption) throws Exception {
+	public String Decrypt(String text, String key, int encryption) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println("Depseudonymisierung ist nicht möglich");
 		return "Depseudonymisierung ist nicht möglich";

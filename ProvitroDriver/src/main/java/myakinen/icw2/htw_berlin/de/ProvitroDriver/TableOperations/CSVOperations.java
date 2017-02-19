@@ -18,6 +18,7 @@ import myakinen.icw2.htw_berlin.de.ProvitroAPI.TablesOperationsInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionDes;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionNexus;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionRC4;
+import myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData.EncryptionXOR;
 
 public class CSVOperations implements TablesOperationsInterface {
 
@@ -26,7 +27,7 @@ public class CSVOperations implements TablesOperationsInterface {
 	private EncryptionMedicalFindingsInterface encrMedFind;
 	
 	@Override
-	public void managerEncryptor(String path, int encryption, int key) throws IOException, Exception {
+	public void managerEncryptor(String path, int encryption, String key) throws IOException, Exception {
 		// TODO Auto-generated method stub
 		
 		String line = "";
@@ -46,6 +47,9 @@ public class CSVOperations implements TablesOperationsInterface {
             break;
             
         case 3:
+        	encryptionType = new EncryptionRC4();
+        	break;
+        case 4:
         	encryptionType = new EncryptionRC4();
         	break;
         
@@ -112,7 +116,7 @@ public class CSVOperations implements TablesOperationsInterface {
 	}
 
 	@Override
-	public void managerDecryptor(String path, int encryption, int key) throws IOException, Exception {
+	public void managerDecryptor(String path, int encryption, String key) throws IOException, Exception {
 		// TODO Auto-generated method stub
 		String line = "";
 		//encrMedFind = new EncyptionMedicalFindingsSecond ();
@@ -132,6 +136,9 @@ public class CSVOperations implements TablesOperationsInterface {
             
         case 3:
         	encryptionType = new EncryptionRC4();
+        	break;
+        case 4:
+        	encryptionType = new EncryptionXOR();
         	break;
         
         default:

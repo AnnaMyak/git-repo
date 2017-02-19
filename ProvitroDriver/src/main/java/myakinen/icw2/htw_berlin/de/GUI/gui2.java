@@ -21,7 +21,14 @@ import myakinen.icw2.htw_berlin.de.ProvitroDriver.TableOperations.CSVOperations;
 import myakinen.icw2.htw_berlin.de.ProvitroDriver.TableOperations.ExcelOperations;
 
 public class gui2 extends JFrame implements ActionListener{
-//Psedonymisieren
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+/*
+	//Psedonymisieren
 	JButton inputDataPseu;
     JButton encryptButtonPseu;
     JLabel testLabelPseu;
@@ -278,5 +285,5 @@ public String testDataFormat(String path) {
 	String substring = path.substring(Math.max(path.length() - 3, 0));
 	return substring;
 	}
-
+*/
 }

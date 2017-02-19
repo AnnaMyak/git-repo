@@ -2,10 +2,10 @@ package myakinen.icw2.htw_berlin.de.ProvitroDriver.EncryptionMedicalData;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.*;
 
 
-public class EncryptionDCPathos implements EncryptionMedicalDataInterface {
+public class EncryptionDCPathos implements EncryptionMedicalDataInterface  {
 
 	//Original Kirstein-Algorithm encrypt root patient Data
-		public String EncryptData(String patientData, int key) throws Exception{
+		public String EncryptData(String patientData, String key) throws Exception{
 			patientData=patientData.replace("-", "");
 			char [] charArr = patientData.toCharArray();
 			int[] intArr= new int[charArr.length];
@@ -18,15 +18,15 @@ public class EncryptionDCPathos implements EncryptionMedicalDataInterface {
 						intArr[i]=Character.getNumericValue(charArr[i]);
 				str=str+Integer.toString(intArr[i]);
 			}
-			return Integer.toString(Integer.parseInt(str)+key);
+			return Integer.toString(Integer.parseInt(str)+Integer.parseInt(key));
 		}
 		
 		
 		
 		//Original Kirstein-Algorithm decrypt root patient Data
-		public String DecryptData(String patientData, int key) throws Exception{
+		public String DecryptData(String patientData, String key) throws Exception{
 			// TODO Auto-generated method stub
-			String parseData=Integer.toString(Integer.parseInt(patientData)-key);
+			String parseData=Integer.toString(Integer.parseInt(patientData)-Integer.parseInt(key));
 			String numLetter=parseData.substring(0, 3);
 			if (Integer.parseInt(numLetter)>127)
 			{
