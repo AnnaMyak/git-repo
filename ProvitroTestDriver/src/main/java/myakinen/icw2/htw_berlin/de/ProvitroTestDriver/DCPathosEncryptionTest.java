@@ -37,7 +37,6 @@ public class DCPathosEncryptionTest {
 	}
 	
 	@Test
-	//2. Datei
 	public void EncryptionDCPathosTest() throws IOException, Exception
 	{
 		encryptionDCPathosTest("C:/Users/AnnaToshiba2/Desktop/testDriver/test1.csv");

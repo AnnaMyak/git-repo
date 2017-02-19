@@ -104,7 +104,7 @@ public class App
         //tp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //tp.setVisible(true);
     	
-    	/*
+    	
     	EncryptionMedicalDataInterface d1 = new EncryptionDCPathos();
     	EncryptionMedicalDataInterface d2 = new EncryptionDes();
     	EncryptionMedicalDataInterface d3 = new EncryptionNexus();
@@ -117,11 +117,8 @@ public class App
     	System.out.println("Verscl Nex "+ d3.EncryptData(s1, "1234") );
     	System.out.println("Verscl RC4 "+ d4.EncryptData(s1, key) );
     	System.out.println("Verscl XOR "+ d5.EncryptData(s1, key) );
-    	*/
     	
-    	EncryptionDCPathos dc = new EncryptionDCPathos();
-    	System.out.println("TEST dc " + dc.EncryptData("H28169-80", "0906585032") );
-    	System.out.println("TEST dc " + dc.DecryptData("1627436136", "0906585032") );
+    	
     	
     	
     	
