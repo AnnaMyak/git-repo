@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
@@ -44,15 +45,26 @@ public class GUIFinal extends JFrame implements ActionListener {
 	{
 		setTitle("Provitro Pseudonyminisierungstool");
 		setSize(800, 500);
+		
+		
 		JTabbedPane tappedPanel = new JTabbedPane();
+		tappedPanel.setTabPlacement(JTabbedPane.TOP);
 	    getContentPane().add(tappedPanel);
 	    JPanel pseudonym = new JPanel();
+	    //pseudonym.setLayout(null);
 	    JPanel depseudonym = new JPanel();
+	    // tappedPanel.setLayout(null);
+	    
 	    resultPseu= new JLabel();
 	    
 	    //Pseudonym
-	    JLabel labelPseuTitel = new JLabel("Pseudonymisieren");
+	    
+	   
+	    
+	    
 	    //ButtonGroup wird erstellt
+	    
+	    //labelKeyPseu.setVerticalAlignment(alignment);
 	    ButtonGroup gruppeEncryptionPseu = new ButtonGroup();
 	    JRadioButton nexusPseu = new JRadioButton("Nexus");
 	    JRadioButton desPseu = new JRadioButton("DES");
@@ -76,14 +88,17 @@ public class GUIFinal extends JFrame implements ActionListener {
 		    encryption=4;
 	    if (dcPseu.isSelected())
 		    encryption=0;
-	      
+	    JLabel labelKeyPseu = new JLabel("Schlüssel");  
 	    labelSelectedFilePseu = new JLabel("Noch keine Datei geladen");
 	    inputFilePseu = new JButton("Datei Laden");
 	    keyPseu = new JTextField("1111111111", 15);
+	    keyPseu.setSize(100,20);
+	    
 	    executionPseu = new JButton ("Ausführen");
-	    pseudonym.add(labelPseuTitel);
+	    
+	    pseudonym.add(labelKeyPseu);
 	    pseudonym.add(keyPseu);
-	   
+	    
 	    
 	    //Add Buttons group Pseudonym
 	    pseudonym.add(nexusPseu);
@@ -94,7 +109,7 @@ public class GUIFinal extends JFrame implements ActionListener {
 	    
 	  //Add Buttons group Depseudonym
 	    
-	    
+	   
 	    pseudonym.add(labelSelectedFilePseu);
 	    pseudonym.add(inputFilePseu);
 	    pseudonym.add(executionPseu);
@@ -102,11 +117,12 @@ public class GUIFinal extends JFrame implements ActionListener {
 	    
 	    
 	    //Depseudonym
-	    JLabel labelDepseuTitel = new JLabel("Depseudonymisieren");
+	    
 	    labelSelectedFileDepseu = new JLabel("Noch keine Datei geladen");
 	    inputFileDepseu = new JButton("Datei Laden");
 	    keyDepseu = new JTextField("1111111111", 15);
 	    resultDepseu = new JLabel();
+	    JLabel labelKeyDepseu = new JLabel("Schlüssel");
 	    
 	    ButtonGroup gruppeEncryptionDepseu = new ButtonGroup();
 	    JRadioButton nexusDepseu = new JRadioButton("Nexus");
@@ -133,18 +149,22 @@ public class GUIFinal extends JFrame implements ActionListener {
 		    encryption=4;
 	    if (dcDepseu.isSelected())
 		    encryption=0;
+	    
+	    depseudonym.add(labelKeyDepseu);
+	    depseudonym.add(keyDepseu);
+	    
+	    
 	    depseudonym.add(nexusDepseu);
 	    depseudonym.add(desDepseu);
 	    depseudonym.add(rc4Depseu);
 	    depseudonym.add(xorDepseu);
 	    depseudonym.add(dcDepseu);
 	    executionDepseu = new JButton ("Ausführen");
-	    depseudonym.add(labelPseuTitel);
-	    depseudonym.add(keyDepseu);
 	    depseudonym.add(labelSelectedFileDepseu);
 	    depseudonym.add(inputFileDepseu);
 	    depseudonym.add(executionDepseu);
-	    depseudonym.add(resultDepseu); 
+	    depseudonym.add(resultDepseu);
+	    
 	    
 	    //ActionListeners
 	    inputFileDepseu.addActionListener(this);
@@ -157,7 +177,8 @@ public class GUIFinal extends JFrame implements ActionListener {
 	    
 	    //build gui
 	    tappedPanel.addTab("Pseudonymisieren", pseudonym);
-	    tappedPanel.addTab("Depseudonymisieren", depseudonym);	
+	    tappedPanel.addTab("Depseudonymisieren", depseudonym);
+	    
 	}
 
 	@Override
