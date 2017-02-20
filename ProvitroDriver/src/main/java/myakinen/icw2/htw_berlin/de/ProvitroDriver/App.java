@@ -39,7 +39,7 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 import myakinen.icw2.htw_berlin.de.Config.Configuration;
 import myakinen.icw2.htw_berlin.de.GUI.GUIFinal;
-import myakinen.icw2.htw_berlin.de.GUI.gui2;
+
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.ConfigurationInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.EncryptionMedicalDataInterface;
 import myakinen.icw2.htw_berlin.de.ProvitroAPI.TablesOperationsInterface;
