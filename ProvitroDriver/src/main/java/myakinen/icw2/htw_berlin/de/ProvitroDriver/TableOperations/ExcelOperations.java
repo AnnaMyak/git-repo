@@ -57,7 +57,7 @@ public class ExcelOperations implements TablesOperationsInterface  {
 		boolean makeDir=false;
 		boolean testDataStructure=true;
 		config = new Configuration();
-		ArrayList<String> configurations = config.getConfigurations("Config2");
+		ArrayList<String> configurations = config.getConfigurations("Config");
 		List<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
 		
 		ArrayList <String> finding = new ArrayList<String>();
@@ -165,7 +165,7 @@ public class ExcelOperations implements TablesOperationsInterface  {
 		boolean makeDir=false;
 		boolean testDataStructure=true;
 		config = new Configuration();
-		ArrayList<String> configurations = config.getConfigurations("Config2");;
+		ArrayList<String> configurations = config.getConfigurations("Config");;
 		List<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
 		
 		ArrayList <String> finding = new ArrayList<String>();

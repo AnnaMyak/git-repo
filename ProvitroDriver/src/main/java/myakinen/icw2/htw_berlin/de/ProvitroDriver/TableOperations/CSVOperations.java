@@ -55,7 +55,7 @@ public class CSVOperations implements TablesOperationsInterface {
 		boolean testDataStructure= true;
 		
 		config = new Configuration();
-		ArrayList<String> configurations = config.getConfigurations("Config2");
+		ArrayList<String> configurations = config.getConfigurations("Config");
 		ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
 		ArrayList<String> fullFinding;
 		
@@ -139,7 +139,7 @@ public class CSVOperations implements TablesOperationsInterface {
 		encrMedFind = new EncryptionMedicalFindings ();
 		boolean testDataStructure= true;
 		config = new Configuration();
-		ArrayList<String> configurations = config.getConfigurations("Config2");
+		ArrayList<String> configurations = config.getConfigurations("Config");
 		ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
 		ArrayList<String> fullFinding;
 		encryptionInstance= new Encryption().getEncryption(encryption);

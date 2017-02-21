@@ -1,6 +1,6 @@
 Case-ID
 Patient-ID
-OP_DATE
-AGE_AT_OP
-GENDER
-Text_COMP
+Op_Date
+Age_at_Op
+Gender
+Text_Comp
