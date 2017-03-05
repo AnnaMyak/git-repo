@@ -24,8 +24,8 @@ public class DCPathosEncryptionTest {
 			 {
 				 //System.out.println(line);
 				 String[] finding = line.split(";");
-				 String testEncodedData = new String( dc.EncryptData(finding[0], "0906585032"));
-				 String testDecodedData = new String (dc.DecryptData(finding[1], "0906585032"));
+				 String testEncodedData = new String( dc.EncryptData(finding[0], "1234567891"));
+				 String testDecodedData = new String (dc.DecryptData(finding[1], "1234567891"));
 				 if (finding[1].equals(testEncodedData)==false)
 				 {
 					 System.out.println("Original: " +finding[0]+ " "+ finding[1]+ " Verschl: " +testDecodedData +" "+testEncodedData);
